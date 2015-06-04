@@ -1,17 +1,18 @@
 package el.team_application.Models.Entities;
 
+import java.util.Date;
+
 /**
  * Created by ariel-mac on 24/05/2015.
  */
 public class TeamMember extends Member {
-    public enum Role {MANAGER, EMPLOYEE}; //values are 1-2 accordingly
-    //def protedted
+    // values are 0-1 accordingly
+    public enum Role {MANAGER, EMPLOYEE}
 
-    //members - (default protected)
+    // members - (default protected)
     Role role = Role.EMPLOYEE; //default Role is Employee
 
-
-    //getters and setters
+    // getters and setters
     public Role getRole() {
         return role;
     }
@@ -20,9 +21,9 @@ public class TeamMember extends Member {
         this.role = role;
     }
 
-    //C'tor
-    public TeamMember(String id, String name, String emailAddress, Role role) {
-        super(id, name, emailAddress);
+    // constructor
+    public TeamMember(String id, String userId, Date joinDate, String jobTitle, Role role) {
+        super(id, userId, jobTitle, joinDate);
         this.role = role;
     }
 }

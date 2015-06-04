@@ -13,69 +13,51 @@ import java.util.Date;
 public class Member {
 
      //members - (default protected)
-    String Id;
-    String Name;
-    Date JoinDate;
-    String EmailAddress;
-    Long phoneNumber;
+    String id;
+    String userId;
+    Date joinDate;
+    String jobTitle;
 
+    // constructor
+
+    public Member(String id, String userId, String jobTitle, Date joinDate) {
+        this.id = id;
+        this.userId = userId;
+        this.jobTitle = jobTitle;
+        this.joinDate = joinDate;
+    }
 
     //getters and setters
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
-    public String getName() {
-        return Name;
+    public String getUserId() {
+        return userId;
     }
 
-    public Date getJoinDate() {
-        return JoinDate;
-    }
-
-    public String getEmailAddress() {
-        return EmailAddress;
-    }
-
-    public Long getPhoneNumber() {
-        return phoneNumber;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getJobTitle() {
-        return JobTitle;
+        return jobTitle;
     }
-//setters
+
     public void setJobTitle(String jobTitle) {
-        JobTitle = jobTitle;
+        this.jobTitle = jobTitle;
     }
 
-    public void setPhoneNumber(Long phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        EmailAddress = emailAddress;
+    public Date getJoinDate() {
+        return joinDate;
     }
 
     public void setJoinDate(Date joinDate) {
-        JoinDate = joinDate;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    String JobTitle; //job can be Manager/Employee 1/2 using ENUM
-
-    //C'tor
-    public Member(String id, String name, String emailAddress) {
-        Id = id;
-        Name = name;
-        EmailAddress = emailAddress;
+        this.joinDate = joinDate;
     }
 
 

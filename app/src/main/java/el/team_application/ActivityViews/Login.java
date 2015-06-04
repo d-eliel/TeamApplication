@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import el.team_application.Listeners.AfterLoginCallback;
+import el.team_application.Models.Entities.User;
 import el.team_application.Models.Model;
 import el.team_application.Models.Entities.TeamMember;
 import el.team_application.R;
@@ -54,9 +55,10 @@ public class Login extends ActionBarActivity {
     public void loginAsync(String email, String password){
         Model.getInstance().login(email, password, new AfterLoginCallback() {
             @Override
-            public void loginSuccessful(TeamMember member) {
+            public void loginSuccessful(User user) {
 //                Intent intent = new Intent(getApplicationContext(), Login.class);
 //                startActivity(intent);
+                // todo move to app activity - teams view
                 Toast.makeText(getApplicationContext(),"login successful",Toast.LENGTH_LONG).show();
             }
 

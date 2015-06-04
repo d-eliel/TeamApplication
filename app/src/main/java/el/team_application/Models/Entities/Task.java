@@ -11,74 +11,81 @@ public class Task {
     public enum Status {NOTHING, STARTED, HALF, ALMOST, FINISH}; //values are 0-4 accordingly
 
     //members - (default protected)
-    String Name;
-    String TaskId;
-    TeamMember Creator;
-    Date StartDate;
-    Date EndDate;
-    List<String> ListOfSubTasks; //list of Strings, each string is the ID  primary key of the Task that is a subtask
-    List<TeamMember> MemberList;
-    Status status = Status.NOTHING; //starts with 0%
-    String Description;
-    String Association;
-    String Id;
+    String name;
+    String id;
+    TeamMember creator;
+    Date startDate;
+    Date endDate;
+    List<Task> listOfSubTasks; //list of Strings, each string is the ID  primary key of the Task that is a subtask
+    List<TeamMember> memberList;
+    Status status;
+    String description;
+    String association;
 
+    // constructor
+    public Task(String id, Date startDate, TeamMember creator, String name) {
+        this.id = id;
+        this.startDate = startDate;
+        this.creator = creator;
+        this.name = name;
+        this.status = Status.NOTHING; //starts with 0%
+    }
 
-    //getters and setters
+    // getters and setters
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public TeamMember getCreator() {
-        return Creator;
+        return creator;
     }
 
     public void setCreator(TeamMember creator) {
-        Creator = creator;
+        this.creator = creator;
     }
 
     public Date getEndDate() {
-        return EndDate;
+        return endDate;
     }
 
     public void setEndDate(Date endDate) {
-        EndDate = endDate;
+        this.endDate = endDate;
     }
 
     public Date getStartDate() {
-        return StartDate;
+        return startDate;
     }
 
     public void setStartDate(Date startDate) {
-        StartDate = startDate;
+        this.startDate = startDate;
     }
 
-    public List<String> getListOfSubTasks() {
-        return ListOfSubTasks;
+    public List<Task> getListOfSubTasks() {
+        return listOfSubTasks;
     }
 
-    public void setListOfSubTasks(List<String> listOfSubTasks) {
-        ListOfSubTasks = listOfSubTasks;
+    public void setListOfSubTasks(List<Task> listOfSubTasks) {
+        this.listOfSubTasks = listOfSubTasks;
     }
 
     public List<TeamMember> getMemberList() {
-        return MemberList;
+        return memberList;
     }
 
     public void setMemberList(List<TeamMember> memberList) {
-        MemberList = memberList;
+        this.memberList = memberList;
     }
 
     public Status getStatus() {
@@ -90,34 +97,18 @@ public class Task {
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getAssociation() {
-        return Association;
+        return association;
     }
 
     public void setAssociation(String association) {
-        Association = association;
+        this.association = association;
     }
-
-    public String getTaskId() {
-        return TaskId;
-    }
-
-    public void setTaskId(String taskId) {
-        TaskId = taskId;
-    }
-
-    //C'tor
-    public Task(Date startDate, TeamMember creator, String name) {
-        StartDate = startDate;
-        Creator = creator;
-        Name = name;
-    }
-
 }

@@ -26,12 +26,12 @@ public class Model {
     }
 
     public void init(Context context){
-        //for sql migration checks
+        // for sql migration checks
     }
 
     //model login method, creating instance of a table if there isn't
     public void login(String email, String password, final AfterLoginCallback loginCallback) {
-        //if MODEL PARSE
+        // if MODEL PARSE
 
         modelPARSE.login(email, password, loginCallback);
 

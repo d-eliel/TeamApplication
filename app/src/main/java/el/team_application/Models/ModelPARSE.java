@@ -5,6 +5,7 @@ import com.parse.ParseUser;
 
 import el.team_application.Listeners.AfterLoginCallback;
 import el.team_application.Models.Entities.TeamMember;
+import el.team_application.Models.Entities.User;
 
 /**
  * Created by ariel-mac on 24/05/2015.
@@ -17,11 +18,9 @@ public class ModelPARSE {
             public void done(ParseUser user, com.parse.ParseException e) {
                 if (e == null && user != null) {
                     String id = user.getObjectId();
-                    String name = user.getUsername();
-                    String email = user.getEmail();
-//                    TeamMember.Role role = TeamMember.Role.values()[user.getInt("role")];
-                    TeamMember member = new TeamMember(id, name, email, TeamMember.Role.MANAGER);
-                   callback.loginSuccessful(member);
+                    String email = user.getUsername(); // we use email as username
+                    User myUser = new User(id, email);
+                   callback.loginSuccessful(myUser);
                 } else if (user == null) {
                     callback.usernameOrPasswordIsInvalid(e);
                 }

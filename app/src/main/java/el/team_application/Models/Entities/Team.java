@@ -7,20 +7,25 @@ import java.util.List;
  */
 public class Team {
 
-    //members - (default protected)
+    // members - (default protected)
+    String id;
     List<TeamMember> memberList;
     TeamMember manager;
     List<Task> taskList;
-    String Id;
 
+
+    // constructor
+    public Team(TeamMember manager) {
+        this.manager = manager;
+    }
 
     //getters and setters
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        Id = id;
+        this.id = id;
     }
 
     public List<TeamMember> getMemberList() {
@@ -41,16 +46,10 @@ public class Team {
 
     public List<Task> getTaskList() {
         return taskList;
-
     }
 
     public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
-    }
-
-       //Ctor
-    public Team(TeamMember manager) {
-        this.manager = manager;
     }
 
 }

@@ -7,9 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import el.team_application.Listeners.AfterRegisterCallback;
 import el.team_application.Models.Entities.TeamMember;
+import el.team_application.Models.Entities.User;
 import el.team_application.Models.Model;
 import el.team_application.R;
 
@@ -35,7 +37,7 @@ public class Register extends ActionBarActivity {
                 String email = emailText.getText().toString();
                 String password = pwdText.getText().toString();
                 String confirmPassword = pwdConfText.getText().toString();
-                if(!(password == confirmPassword)){
+                if(!(password.equals(confirmPassword))){
                     errorsText.setText("Passwords Doesn't Match");
                     errorsText.setVisibility(View.VISIBLE);
                     return;
@@ -58,13 +60,14 @@ public class Register extends ActionBarActivity {
     private void registerAsync(String email, String password) {
         Model.getInstance().register(new AfterRegisterCallback() {
             @Override
-            public void registerSuccessful(TeamMember user) {
-
+            public void registerSuccessful(User user) {
+                // todo move to app activity - teams view
+                Toast.makeText(getApplicationContext(), "register successful", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void registerFailed(Exception e) {
-
+                Toast.makeText(getApplicationContext(), "register failed", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -96,11 +99,5 @@ public class Register extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    //register method
-    public void Register(String Name, String Email, String Password){
-        //activate Ctor of team member
-        //new TeamMember(x,y,x);
     }
 }
