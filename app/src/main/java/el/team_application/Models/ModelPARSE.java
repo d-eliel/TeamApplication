@@ -19,8 +19,10 @@ public class ModelPARSE {
                 if (e == null && user != null) {
                     String id = user.getObjectId();
                     String email = user.getUsername(); // we use email as username
-                    User myUser = new User(id, email);
-                   callback.loginSuccessful(myUser);
+                    String name = user.getString("name").toString();
+                    String phone = user.getString("phone").toString();
+                    User myUser = new User(id, email, name, phone);
+                    callback.loginSuccessful(myUser);
                 } else if (user == null) {
                     callback.usernameOrPasswordIsInvalid(e);
                 }
@@ -28,6 +30,10 @@ public class ModelPARSE {
                     callback.loginFailed(e);
                 }
             }
-            });
-        }
+        });
+    }
+
+    public void register (User user, String password){
+
+    }
 }

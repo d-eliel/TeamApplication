@@ -7,10 +7,15 @@ public class User {
     String id;
     String email;
 
+    String name;
+
+    String phone;
     // constructor
-    public User(String id, String email){
+    public User(String id, String email, String name, String phone){
         this.id = id;
         this.email = email;
+        this.name = name;
+        this.phone = phone;
     }
 
     // getters and setters
@@ -28,5 +33,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
