@@ -2,13 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="el.team_application" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ActivityViews.Welcome"
+            android:name=".ActivityViews.MyTeamsActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,16 +20,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityViews.Login"
-            android:label="@string/title_activity_login" >
+            android:name=".ActivityViews.WelcomeActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".ActivityViews.Register"
-            android:label="@string/title_activity_register" >
+            android:name=".ActivityViews.LoginActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ActivityViews.RegisterActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ActivityViews.TeamActivity"
+            android:label="@string/title_activity_team" >
+        </activity>
+        <activity
+            android:name=".ActivityViews.CreateTeamActivity"
+            android:label="@string/title_activity_create_team" >
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

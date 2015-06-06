@@ -10,14 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import el.team_application.Listeners.AfterLoginCallback;
+import el.team_application.Listeners.UserAuth.AfterLoginCallback;
 import el.team_application.Models.Entities.User;
 import el.team_application.Models.Model;
-import el.team_application.Models.Entities.TeamMember;
 import el.team_application.R;
 
 
-public class Login extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity {
 
     private Model model;
 
@@ -45,7 +44,7 @@ public class Login extends ActionBarActivity {
         button_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Register.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -56,10 +55,10 @@ public class Login extends ActionBarActivity {
         Model.getInstance().login(email, password, new AfterLoginCallback() {
             @Override
             public void loginSuccessful(User user) {
-//                Intent intent = new Intent(getApplicationContext(), Login.class);
-//                startActivity(intent);
-                // todo move to app activity - teams view
+                Model.getInstance().setLoggedInUser(user);
                 Toast.makeText(getApplicationContext(),"login successful",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), MyTeamsActivity.class);
+                startActivity(intent);
             }
 
             @Override

@@ -1,4 +1,4 @@
-package el.team_application.Listeners;
+package el.team_application.Listeners.UserAuth;
 
 import el.team_application.Models.Entities.User;
 

@@ -1,5 +1,6 @@
 package el.team_application.ActivityViews;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,14 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import el.team_application.Listeners.AfterRegisterCallback;
-import el.team_application.Models.Entities.TeamMember;
+import java.util.UUID;
+
+import el.team_application.Listeners.UserAuth.AfterRegisterCallback;
 import el.team_application.Models.Entities.User;
 import el.team_application.Models.Model;
 import el.team_application.R;
 
 
-public class Register extends ActionBarActivity {
+public class RegisterActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,56 +30,70 @@ public class Register extends ActionBarActivity {
         final EditText emailText      = (EditText) findViewById(R.id.register_email_et);
         final EditText pwdText        = (EditText) findViewById(R.id.register_password_et);
         final EditText pwdConfText    = (EditText) findViewById(R.id.register_password_confirm_et);
-        final EditText errorsText     = (EditText) findViewById(R.id.register_password_confirm_et);
+        final EditText nameText       = (EditText) findViewById(R.id.register_name_et);
+        final EditText phoneText      = (EditText) findViewById(R.id.register_phone_et);
 
         // listeners:
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailText.getText().toString();
                 String password = pwdText.getText().toString();
                 String confirmPassword = pwdConfText.getText().toString();
-                if(!(password.equals(confirmPassword))){
-                    errorsText.setText("Passwords Doesn't Match");
-                    errorsText.setVisibility(View.VISIBLE);
+                String email = emailText.getText().toString();
+
+                // email validate
+                if(email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    emailText.setError("Please Enter a Valid Email");
                     return;
                 }
-                registerAsync(email, password);
-            }
-        });
+                // check if password and confirm password are equals
+                if(!(password.equals(confirmPassword))){
+                    pwdText.setError("Passwords Doesn't match");
+                    return;
+                }
+                // check if passwords aren't empty
+                if(password.isEmpty() || confirmPassword.isEmpty()){
+                    pwdText.setError("Empty password is not allowed");
+                    return;
+                }
 
-        pwdText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                errorsText.setText("");
-                errorsText.setVisibility(View.GONE);
+                // set new user object by EditText Fields
+                String id = UUID.randomUUID().toString();
+                String name = nameText.getText().toString();
+                String phone = phoneText.getText().toString();
+                User newUser = new User(id,email,name);
+                newUser.setPhone(phone);
+
+                // name validate
+                if(name.isEmpty()){
+                    nameText.setError("Please Enter Your Name");
+                    return;
+                }
+
+                registerAsync(newUser, password);
             }
         });
 
     }
 
     // register async method
-    private void registerAsync(String email, String password) {
-        Model.getInstance().register(new AfterRegisterCallback() {
+    private void registerAsync(final User user, String password) {
+        Model.getInstance().register(user, password, new AfterRegisterCallback() {
             @Override
-            public void registerSuccessful(User user) {
-                // todo move to app activity - teams view
+            public void registerSuccessful() {
+                Model.getInstance().setLoggedInUser(user);
                 Toast.makeText(getApplicationContext(), "register successful", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), MyTeamsActivity.class);
+                startActivity(intent);
             }
 
             @Override
             public void registerFailed(Exception e) {
-                Toast.makeText(getApplicationContext(), "register failed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "register failed: "+e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
 
-            @Override
-            public void usernameOrPasswordIsInvalid(Exception e) {
-
-            }
         });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,4 +116,5 @@ public class Register extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

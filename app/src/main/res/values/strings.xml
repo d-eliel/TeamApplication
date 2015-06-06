@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Team_application</string>
+    <string name="app_name">TeamsApp</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -7,4 +7,8 @@
     <string name="title_activity_register">Register</string>
     <string name="parse_app_id">iVnE8qH61ynKDOJeGyNCKCtKGerHWwo8vTQr3p2T</string>
     <string name="parse_client_key">jRPCYzII6EBVST3j8FjRPjSqcxne0gop5mHcdAfy</string>
+    <string name="title_activity_my_teams">MyTeamsActivity</string>
+    <string name="title_activity_team">TeamActivity</string>
+    <string name="menu_my_teams_create_team">New Team</string>
+    <string name="title_activity_create_team">CreateTeamActivity</string>
 </resources>

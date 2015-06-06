@@ -6,16 +6,14 @@ package el.team_application.Models.Entities;
 public class User {
     String id;
     String email;
-
     String name;
-
     String phone;
+
     // constructor
-    public User(String id, String email, String name, String phone){
+    public User(String id, String email, String name){
         this.id = id;
         this.email = email;
         this.name = name;
-        this.phone = phone;
     }
 
     // getters and setters

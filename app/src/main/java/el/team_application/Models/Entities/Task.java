@@ -10,17 +10,16 @@ public class Task {
 
     public enum Status {NOTHING, STARTED, HALF, ALMOST, FINISH}; //values are 0-4 accordingly
 
-    //members - (default protected)
-    String name;
     String id;
+    String name;
     TeamMember creator;
     Date startDate;
     Date endDate;
-    List<Task> listOfSubTasks; //list of Strings, each string is the ID  primary key of the Task that is a subtask
-    List<TeamMember> memberList;
     Status status;
     String description;
     String association;
+    List<Task> listOfSubTasks;
+    List<TeamMember> memberList;
 
     // constructor
     public Task(String id, Date startDate, TeamMember creator, String name) {

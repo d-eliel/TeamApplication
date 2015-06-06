@@ -1,22 +1,25 @@
 package el.team_application.Models.Entities;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by ariel-mac on 24/05/2015.
  */
 public class Team {
-
-    // members - (default protected)
     String id;
+    String name;
     List<TeamMember> memberList;
-    TeamMember manager;
+//    TeamMember manager;
     List<Task> taskList;
 
 
     // constructor
-    public Team(TeamMember manager) {
-        this.manager = manager;
+    public Team(String id, String name, TeamMember manager) {
+        this.id = id;
+        this.name = name;
+        this.memberList = new LinkedList<TeamMember>();
+        this.memberList.add(manager);
     }
 
     //getters and setters
@@ -28,6 +31,14 @@ public class Team {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<TeamMember> getMemberList() {
         return memberList;
     }
@@ -36,13 +47,13 @@ public class Team {
         this.memberList = memberList;
     }
 
-    public TeamMember getManager() {
-        return manager;
-    }
-
-    public void setManager(TeamMember manager) {
-        this.manager = manager;
-    }
+//    public TeamMember getManager() {
+//        return manager;
+//    }
+//
+//    public void setManager(TeamMember manager) {
+//        this.manager = manager;
+//    }
 
     public List<Task> getTaskList() {
         return taskList;

@@ -13,7 +13,7 @@ import com.parse.Parse;
 import el.team_application.R;
 
 
-public class Welcome extends ActionBarActivity {
+public class WelcomeActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class Welcome extends ActionBarActivity {
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Register.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +44,7 @@ public class Welcome extends ActionBarActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,8 +71,4 @@ public class Welcome extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-     //ADD Link to register
-
-    //ADD Link to Login
 }
