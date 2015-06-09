@@ -15,11 +15,11 @@ public class Team {
 
 
     // constructor
-    public Team(String id, String name, TeamMember manager) {
+    public Team(String id, String name, List<TeamMember> members) {
         this.id = id;
         this.name = name;
         this.memberList = new LinkedList<TeamMember>();
-        this.memberList.add(manager);
+        this.memberList.addAll(members);
     }
 
     //getters and setters

@@ -47,19 +47,23 @@ public class CreateTeamActivity extends ActionBarActivity {
                     nameTV.setError("Please Enter Name");
                     return;
                 }
-                String id           = UUID.randomUUID().toString();
+
+                /* set new manager member */
+                String memberId     = UUID.randomUUID().toString();
                 String userId       = loggedInUser.getId();
-                Date now            = new Date();
-                String title        = "Manager Of "+name;
+                String now          = new Date().toString();
+                String title        = "Manager of "+name;
 
                 TeamMember manager  = new TeamMember (
-                        id,
+                        memberId,
                         userId,
                         now,
                         title,
                         TeamMember.Role.MANAGER );
 
-                Team team = new Team(id, name, manager);
+                List<TeamMember> membersList = new LinkedList<TeamMember>();
+                membersList.add(manager);
+                Team team = new Team(UUID.randomUUID().toString(), name, membersList);
                 Model.getInstance().addMember(manager, new AddMemberListener() {
                     @Override
                     public void onResult(Exception e) {

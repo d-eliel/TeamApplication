@@ -14,11 +14,11 @@ import el.team_application.Listeners.Teams.GetTeamByIdListener;
 import el.team_application.Listeners.Teams.RemoveTeamListener;
 import el.team_application.Listeners.UserAuth.AfterLoginCallback;
 import el.team_application.Listeners.UserAuth.AfterRegisterCallback;
-import el.team_application.Listeners.UserAuth.GetCurrentUserCallback;
+import el.team_application.Listeners.UserAuth.GetSessionCallback;
+import el.team_application.Listeners.UserAuth.GetUserByIdCallback;
 import el.team_application.Models.Entities.Team;
 import el.team_application.Models.Entities.TeamMember;
 import el.team_application.Models.Entities.User;
-//TEST COMMENT ELIEL ARIEL
 
 /**
  * Created by ariel-mac on 24/05/2015.
@@ -143,8 +143,12 @@ public class Model {
     //region User Authentication
 
     // get current logged in user (saved session)
-    public void getCurrentUser(GetCurrentUserCallback callback){
-        modelPARSE.getCurrentUser(callback);
+    public void getSession(GetSessionCallback callback){
+        modelPARSE.getSession(callback);
+    }
+
+    public void getUserById(String id, GetUserByIdCallback getUserByIdCallback){
+        modelPARSE.getUserById(id, getUserByIdCallback);
     }
 
     // model login method, creating instance of a table if there isn't

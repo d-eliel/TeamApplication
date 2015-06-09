@@ -1,35 +1,29 @@
 package el.team_application.ActivityViews;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import el.team_application.Listeners.Teams.GetMyTeamsListener;
-import el.team_application.Listeners.UserAuth.GetCurrentUserCallback;
+import el.team_application.Listeners.UserAuth.AfterLoginCallback;
+import el.team_application.Listeners.UserAuth.GetSessionCallback;
+import el.team_application.Listeners.UserAuth.GetUserByIdCallback;
 import el.team_application.Models.Entities.Team;
+import el.team_application.Models.Entities.TeamMember;
 import el.team_application.Models.Entities.User;
 import el.team_application.Models.Model;
 import el.team_application.R;
@@ -47,56 +41,39 @@ public class MyTeamsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_teams);
 
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-        for (int i = 0; i < values.length; ++i) {
-            teamsNames.add(values[i]);
-        }
+        loggedInUser = Model.getInstance().getLoggedInUser();
+
+//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+//                "Android", "iPhone", "WindowsMobile" };
+//        for (int i = 0; i < values.length; ++i) {
+//            teamsNames.add(values[i]);
+//        }
 
         listView    = (ListView) findViewById(R.id.myteam_list);
         adapter     = new MyTeamsAdapter();
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), "item click " + position, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(),TeamActivity.class);
-                intent.putExtra("id",teamsNames.get(position));
+                Intent intent = new Intent(getApplicationContext(), TeamActivity.class);
+                intent.putExtra("id", teams.get(position).getId());
                 startActivity(intent);
             }
         });
 
-        // getting current user
-        Model.getInstance().getCurrentUser(new GetCurrentUserCallback() {
+        Model.getInstance().getMyTeams(loggedInUser.getId(), new GetMyTeamsListener() {
             @Override
-            public void loggedInUser(User user) {
-                if (user == null) {
-                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                    startActivity(intent);
-                } else {
-                    loggedInUser = user;
-                    Model.getInstance().getMyTeams(user.getId(), new GetMyTeamsListener() {
-                        @Override
-                        public void onResult(List<Team> myTeams, Exception e) {
-                            if (e != null) {
-                                // todo print message to screen
-                            } else {
-                                teams = myTeams;
-                                adapter.notifyDataSetChanged();
-
-//                                for (Team team : teams){
-//                                    teamsNames.add(team.getName());
-//                                }
-                            }
-                        }
-                    });
-                }
+            public void onResult(List<Team> myTeams, Exception e) {
+                teams = myTeams;
+                adapter.notifyDataSetChanged();
             }
         });
+
     }
 
     @Override
@@ -116,7 +93,9 @@ public class MyTeamsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.menu_my_teams_create_team:
-                newTeam();
+                Toast.makeText(getApplicationContext(), "Create new Team", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(),CreateTeamActivity.class);
+                startActivity(intent);
                 return true;
         }
 
@@ -157,12 +136,12 @@ public class MyTeamsActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            return teamsNames.size();
+            return teams.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return teamsNames.get(position);
+            return teams.get(position);
         }
 
         @Override
@@ -181,10 +160,25 @@ public class MyTeamsActivity extends ActionBarActivity {
             TextView managerName = (TextView) convertView.findViewById(R.id.myteams_row_manager_tv);
             convertView.setTag(position);
 
-            String name = teamsNames.get(position);
-            String manager = teamsNames.get(position)+" manager";
+            TeamMember manager = null;
+            List<TeamMember> members = teams.get(position).getMemberList();
+            for (TeamMember member : members){
+                if(member.getRole().equals(TeamMember.Role.MANAGER)){
+                    manager = member;
+                    break;
+                }
+            }
+
+//            Model.getInstance().getUserById(manager.getUserId(), new GetUserByIdCallback() {
+//                @Override
+//                public void onResult(User user) {
+//                    user.getEmail();
+//                }
+//            });
+
+            String name = teams.get(position).getName();
             teamName.setText(name);
-            managerName.setText(manager);
+            managerName.setText(manager.getJobTitle());
 
             return convertView;
         }

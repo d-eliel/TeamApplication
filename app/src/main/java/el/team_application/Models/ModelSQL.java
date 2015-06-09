@@ -2,7 +2,7 @@ package el.team_application.Models;
 
 import el.team_application.Listeners.UserAuth.AfterLoginCallback;
 import el.team_application.Listeners.UserAuth.AfterRegisterCallback;
-import el.team_application.Listeners.UserAuth.GetCurrentUserCallback;
+import el.team_application.Listeners.UserAuth.GetSessionCallback;
 import el.team_application.Models.Entities.User;
 
 /**
@@ -97,7 +97,7 @@ public class ModelSQL {
     //region User Authentication
 
     // get current logged in user (saved session)
-    public void getCurrentUser(final GetCurrentUserCallback callback){
+    public void getCurrentUser(final GetSessionCallback callback){
     }
 
     // model login method, creating instance of a table if there isn't

@@ -1,5 +1,7 @@
 package el.team_application.Models.Entities;
 
+import java.util.List;
+
 /**
  * Created by Eliel on 6/4/2015.
  */
@@ -8,6 +10,7 @@ public class User {
     String email;
     String name;
     String phone;
+    List<String> myTeams;
 
     // constructor
     public User(String id, String email, String name){
@@ -47,5 +50,13 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<String> getMyTeams() {
+        return myTeams;
+    }
+
+    public void setMyTeams(List<String> myTeams) {
+        this.myTeams = myTeams;
     }
 }

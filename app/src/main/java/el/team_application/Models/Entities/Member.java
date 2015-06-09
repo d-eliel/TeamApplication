@@ -15,12 +15,12 @@ public class Member {
      //members - (default protected)
     String id;
     String userId;
-    Date joinDate;
+    String joinDate;
     String jobTitle;
 
     // constructor
 
-    public Member(String id, String userId, String jobTitle, Date joinDate) {
+    public Member(String id, String userId, String jobTitle, String joinDate) {
         this.id = id;
         this.userId = userId;
         this.jobTitle = jobTitle;
@@ -52,11 +52,11 @@ public class Member {
         this.jobTitle = jobTitle;
     }
 
-    public Date getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 

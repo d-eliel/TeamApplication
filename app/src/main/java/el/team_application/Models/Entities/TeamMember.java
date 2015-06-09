@@ -22,7 +22,7 @@ public class TeamMember extends Member {
     }
 
     // constructor
-    public TeamMember(String id, String userId, Date joinDate, String jobTitle, Role role) {
+    public TeamMember(String id, String userId, String joinDate, String jobTitle, Role role) {
         super(id, userId, jobTitle, joinDate);
         this.role = role;
     }

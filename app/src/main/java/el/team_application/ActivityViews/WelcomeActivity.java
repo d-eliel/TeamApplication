@@ -19,14 +19,10 @@ public class WelcomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        //from parse.com
+
+        // Parse Keys
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
-
-        /*testing the Parse online DB and it's connection
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground(); */
 
         // buttons
         final Button register_button = (Button) findViewById(R.id.welcome_register_btn);

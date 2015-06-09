@@ -1,9 +1,11 @@
 package el.team_application.ActivityViews;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import el.team_application.R;
 
@@ -13,6 +15,11 @@ public class TeamActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
+
+        TextView teamName = (TextView) findViewById(R.id.team_name_tv);
+        Intent intent = getIntent();
+        String id = intent.getExtras().getString("id");
+        teamName.setText(id);
     }
 
     @Override
