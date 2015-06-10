@@ -1,5 +1,6 @@
 package el.team_application.ActivityViews;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -43,4 +44,11 @@ public class TeamActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        Intent resultIntent = new Intent();
+//        setResult(Activity.RESULT_OK, resultIntent);
+//        finish();
+//    }
 }

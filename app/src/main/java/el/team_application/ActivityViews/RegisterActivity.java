@@ -85,6 +85,7 @@ public class RegisterActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "register successful", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), MyTeamsActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override

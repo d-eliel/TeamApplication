@@ -274,19 +274,20 @@ public class ModelPARSE {
     }
 
     public void getSession(final GetSessionCallback callback){
-        callback.loggedInUser(null);
-        try{
-            ParseSession.getCurrentSessionInBackground(new GetCallback<ParseSession>() {
-                @Override
-                public void done(ParseSession parseSession, ParseException e) {
-                    String token = parseSession.getSessionToken();
-                    ParseUser user = parseSession.getParseUser(token);
-                    callback.loggedInUser(normalizeParseUser(user));
-                }
-            });
-        }catch (Exception e){
-            callback.loggedInUser(null);
-        }
+//        callback.loggedInUser(null);
+//        try{
+//            ParseSession.getCurrentSessionInBackground(new GetCallback<ParseSession>() {
+//                @Override
+//                public void done(ParseSession parseSession, ParseException e) {
+//                    String token = parseSession.getSessionToken();
+//                    ParseUser user = parseSession.getParseUser(token);
+//                    callback.loggedInUser(normalizeParseUser(user));
+//                }
+//            });
+//        }catch (Exception e){
+//            callback.loggedInUser(null);
+//        }
+        callback.loggedInUser(normalizeParseUser(ParseUser.getCurrentUser()));
     }
 
     public void getUserById(String id, final GetUserByIdCallback getUserByIdCallback){

@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.Parse;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,17 +43,26 @@ public class MyTeamsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_teams);
 
-        loggedInUser = Model.getInstance().getLoggedInUser();
+        //loggedInUser = Model.getInstance().getLoggedInUser();
 
-//        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-//                "Android", "iPhone", "WindowsMobile" };
-//        for (int i = 0; i < values.length; ++i) {
-//            teamsNames.add(values[i]);
-//        }
+        // Parse Keys
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
 
+        // getting the logged user on the device
+        Model.getInstance().getSession(new GetSessionCallback() {
+            @Override
+            public void loggedInUser(User user) {
+                if(user == null){
+                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    loggedInUser = user;
+                    Model.getInstance().setLoggedInUser(user);
+                }
+            }
+        });
         listView    = (ListView) findViewById(R.id.myteam_list);
         adapter     = new MyTeamsAdapter();
         listView.setAdapter(adapter);
@@ -66,6 +77,11 @@ public class MyTeamsActivity extends ActionBarActivity {
             }
         });
 
+        requestMyTeams();
+
+    }
+
+    private void requestMyTeams() {
         Model.getInstance().getMyTeams(loggedInUser.getId(), new GetMyTeamsListener() {
             @Override
             public void onResult(List<Team> myTeams, Exception e) {
@@ -73,7 +89,6 @@ public class MyTeamsActivity extends ActionBarActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
     }
 
     @Override
@@ -95,7 +110,7 @@ public class MyTeamsActivity extends ActionBarActivity {
             case R.id.menu_my_teams_create_team:
                 Toast.makeText(getApplicationContext(), "Create new Team", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(),CreateTeamActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, NEW_TEAM_REQUEST);
                 return true;
         }
 
@@ -104,23 +119,13 @@ public class MyTeamsActivity extends ActionBarActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//        requestMyTeams();
         // Check which request we're responding to
         switch(requestCode){
             case NEW_TEAM_REQUEST: {
                 // Make sure the request was successful
                 if (resultCode == RESULT_OK) {
-                    Model.getInstance().getMyTeams(loggedInUser.getId(), new GetMyTeamsListener() {
-                        @Override
-                        public void onResult(List<Team> myTeams, Exception e) {
-                            if (e != null) {
-                                // todo print message to screen
-                            } else {
-                                teams = myTeams;
-                                adapter.notifyDataSetChanged();
-
-                            }
-                        }
-                    });
+                    requestMyTeams();
                 }
             }
         }

@@ -20,9 +20,9 @@ public class WelcomeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Parse Keys
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+//        // Parse Keys
+//        Parse.enableLocalDatastore(this);
+//        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
 
         // buttons
         final Button register_button = (Button) findViewById(R.id.welcome_register_btn);

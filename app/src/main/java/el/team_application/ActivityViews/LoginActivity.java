@@ -59,6 +59,7 @@ public class LoginActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(),"login successful",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), MyTeamsActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override

@@ -1,5 +1,6 @@
 package el.team_application.ActivityViews;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -79,9 +80,12 @@ public class CreateTeamActivity extends ActionBarActivity {
                 });
 
                 /* move to the Team Activity */
-                Intent intent = new Intent(getApplicationContext(),TeamActivity.class);
-                intent.putExtra("id", team.getId());
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(),TeamActivity.class);
+//                intent.putExtra("id", team.getId());
+//                startActivity(intent);
+                Intent resultIntent = new Intent();
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
             }
         });
     }
