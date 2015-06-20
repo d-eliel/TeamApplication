@@ -28,7 +28,7 @@ public class TaskSQL {
         final static String TASK_TABLE_ASSOCI       = "association";
 
 
-//create the table
+        // create the table
         static public void create(SQLiteDatabase db){
             db.execSQL("create table " + TASK_TABLE + " (" +
                             TASK_TABLE_ID + " TEXT PRIMARY KEY," +
@@ -41,11 +41,31 @@ public class TaskSQL {
                             TASK_TABLE_DESC + " TEXT," +
                             TASK_TABLE_ASSOCI + " TEXT);");
         }
-//drop table
+
+        // drop table
         public static void drop(SQLiteDatabase db) {
             db.execSQL("drop table " + TASK_TABLE + ";");
         }
-//return according to the id
+
+        private static Task.Status stringToTaskStatus(String status){
+            switch (status){
+                case "NOTHING":
+                    return Task.Status.NOTHING;
+                case "STARTED":
+                    return Task.Status.STARTED;
+                case "HALF":
+                    return Task.Status.HALF;
+                case "ALMOST":
+                    return Task.Status.ALMOST;
+                case "FINISH":
+                    return Task.Status.FINISH;
+                default:
+                    break;
+            }
+            return Task.Status.NOTHING;
+        }
+
+        // return according to the id
         public static Task getById (SQLiteDatabase db, String id) {
             String where = id + " = ?";
             String[] args = {id};
@@ -68,18 +88,22 @@ public class TaskSQL {
                 String startDate = cursor.getString(startDateId);
                 String endDate = cursor.getString(endDateId);
                 String status = cursor.getString(statusId);
-                String desc = cursor.getString(descId);
                 String association = cursor.getString(associationId);
+                String description = cursor.getString(descId);
                 String teamId = cursor.getString(teamInd);
 
-//    public Task(String id, String startDate, TeamMember creator, String name) {
-
-                Task task = new Task(taskId, startDate, new TeamMember(creator,null,null,null,null), taskName);
-                return task;
+                Task newTask = new Task(id,startDate,new TeamMember(creator,null,null,null,null),taskName);
+                newTask.setEndDate(endDate);
+                newTask.setStatus(stringToTaskStatus(status));
+                newTask.setDescription(description);
+                newTask.setAssociation(association);
+                newTask.setTeamId(teamId);
+                return newTask;
             }
             return null;
         }
-//add method
+
+        //add method
         public static void add(SQLiteDatabase db, Task task) {
             ContentValues values = new ContentValues();
             values.put(TASK_TABLE_ID,           task.getId());
@@ -94,21 +118,22 @@ public class TaskSQL {
             db.insert(TASK_TABLE, TASK_TABLE_ID, values);
         }
 
-// edit method
-    public static void edit(SQLiteDatabase db, Task task) {
-        String where = TASK_TABLE_ID + " = " + task.getId();
-        ContentValues values = new ContentValues();
-        values.put(TASK_TABLE_ID,           task.getId());
-        values.put(TASK_TABLE_TEAM_ID,      task.getTeamId());
-        values.put(TASK_TABLE_ASSOCI,       task.getAssociation());
-        values.put(TASK_TABLE_CREATOR_ID,   task.getCreator().getId());
-        values.put(TASK_TABLE_DESC,         task.getDescription());
-        values.put(TASK_TABLE_START,        task.getStartDate());
-        values.put(TASK_TABLE_END,          task.getEndDate());
-        values.put(TASK_TABLE_STATUS,       task.getStatus().toString());
-        db.update(TASK_TABLE, values, where, null);
-    }
-//delete method
+        // edit method
+        public static void edit(SQLiteDatabase db, Task task) {
+            String where = TASK_TABLE_ID + " = " + task.getId();
+            ContentValues values = new ContentValues();
+            values.put(TASK_TABLE_ID,           task.getId());
+            values.put(TASK_TABLE_TEAM_ID,      task.getTeamId());
+            values.put(TASK_TABLE_ASSOCI,       task.getAssociation());
+            values.put(TASK_TABLE_CREATOR_ID,   task.getCreator().getId());
+            values.put(TASK_TABLE_DESC,         task.getDescription());
+            values.put(TASK_TABLE_START,        task.getStartDate());
+            values.put(TASK_TABLE_END,          task.getEndDate());
+            values.put(TASK_TABLE_STATUS,       task.getStatus().toString());
+            db.update(TASK_TABLE, values, where, null);
+        }
+
+        //delete method
         public static void delete(SQLiteDatabase db, String taskId){
             String where = TASK_TABLE_ID + " = " + taskId;
             db.delete(TASK_TABLE_ID, where, null);

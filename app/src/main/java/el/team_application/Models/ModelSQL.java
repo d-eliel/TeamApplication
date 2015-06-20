@@ -4,9 +4,12 @@ import el.team_application.Listeners.User.AfterLoginCallback;
 import el.team_application.Listeners.User.AfterRegisterCallback;
 import el.team_application.Listeners.User.GetSessionCallback;
 import el.team_application.Models.Entities.Member;
+import el.team_application.Models.Entities.Team;
 import el.team_application.Models.Entities.TeamMember;
 import el.team_application.Models.Entities.User;
 import el.team_application.Models.QueriesSQL.TeamMemberSQL;
+import el.team_application.Models.QueriesSQL.TeamSQL;
+import el.team_application.Models.QueriesSQL.UserSQL;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,31 +26,15 @@ public class ModelSQL {
     Helper sqlDb;
     final static int VERSION = 1; //versions start from 1 and up
 
-    //region Team CRUD
-
     public void init(Context context){
         if (sqlDb == null){
             sqlDb = new Helper(context);
         }
     }
 
-    public List<TeamMember> getAllTeamMembers(){
-        SQLiteDatabase db = sqlDb.getReadableDatabase();
-        return TeamMemberSQL.getAllTeamMembers(db);
-    }
+    //region Team CRUD
 
-    public TeamMember getTeamMemberById(String id){
-        SQLiteDatabase db = sqlDb.getReadableDatabase();
-        return TeamMemberSQL.getTeamMemberById(db, id);
-    }
-
-    public void add(TeamMember tm){
-        SQLiteDatabase db = sqlDb.getWritableDatabase();
-        TeamMemberSQL.add(db,tm);
-    }
-
-
-    public void createTeam(){
+    public void createTeam(Team team){
 
     }
 
@@ -71,8 +58,19 @@ public class ModelSQL {
 
     //region TeamMember CRUD
 
-    public void addMember(){
+    public List<TeamMember> getAllTeamMembers(){
+        SQLiteDatabase db = sqlDb.getReadableDatabase();
+        return TeamMemberSQL.getAllTeamMembers(db);
+    }
 
+    public TeamMember getTeamMemberById(String id){
+        SQLiteDatabase db = sqlDb.getReadableDatabase();
+        return TeamMemberSQL.getTeamMemberById(db, id);
+    }
+
+    public void addTeamMember(TeamMember tm){
+        SQLiteDatabase db = sqlDb.getWritableDatabase();
+        TeamMemberSQL.add(db,tm);
     }
 
     public void removeMember(){
@@ -152,6 +150,8 @@ public class ModelSQL {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
+            UserSQL.create(db);
+            TeamSQL.create(db);
             TeamMemberSQL.create(db);
         }
 

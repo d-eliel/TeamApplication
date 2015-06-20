@@ -11,6 +11,7 @@ public class TeamMember extends Member {
 
     // members - (default protected)
     Role role = Role.EMPLOYEE; //default Role is Employee
+    String teamId;
 
 
     // getters and setters
@@ -22,6 +23,13 @@ public class TeamMember extends Member {
         this.role = role;
     }
 
+    public String getTeamId(){
+        return teamId;
+    }
+
+    public void setTeamId(String teamId){
+        this.teamId = teamId;
+    }
 
     // constructor
     public TeamMember(String id, String userId, String joinDate, String jobTitle, Role role) {

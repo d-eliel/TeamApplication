@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import el.team_application.Models.Entities.Team;
 
 /**
@@ -63,7 +66,7 @@ public class TeamSQL {
 
     public static void delete(SQLiteDatabase db, String teamId){
         String where = TEAM_TABLE_ID + " = " + teamId;
-        db.delete(TEAM_TABLE,where,null);
+        db.delete(TEAM_TABLE, where, null);
     }
 
 }

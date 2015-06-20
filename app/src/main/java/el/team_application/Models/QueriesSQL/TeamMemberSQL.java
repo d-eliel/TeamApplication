@@ -15,14 +15,13 @@ import el.team_application.Models.Entities.TeamMember;
 
 public class TeamMemberSQL {
         //provide access to TeamMember Table in SQLite - CRUD
-
-        final static String TEAM_MEMBER_TABLE           = "team_member"; //table name
-        final static String TEAM_MEMBER_TABLE_ID        = "_id";
-        final static String TEAM_MEMBER_TABLE_TEAM_ID   = "teamId";
-        final static String TEAM_MEMBER_TABLE_USER_ID   = "userId";
-        final static String TEAM_MEMBER_TABLE_JOIN_DATE = "joinDate";
-        final static String TEAM_MEMBER_TABLE_JOB_TITLE = "jobTitle";
-        final static String TEAM_MEMBER_TABLE_ROLE      = "role";
+        final static String TEAM_MEMBER_TABLE               = "teamMember"; //table name
+        final static String TEAM_MEMBER_TABLE_ID            = "_teamMemberId";
+        final static String TEAM_MEMBER_TABLE_USER_ID       = "userId";
+        final static String TEAM_MEMBER_TABLE_TEAM_ID       = "teamId";
+        final static String TEAM_MEMBER_TABLE_JOIN_DATE     = "joinDate";
+        final static String TEAM_MEMBER_TABLE_JOB_TITLE     = "jobTitle";
+        final static String TEAM_MEMBER_TABLE_ROLE          = "role";
 
         static public void create(SQLiteDatabase db) {
             db.execSQL("create table " + TEAM_MEMBER_TABLE + " (" +
@@ -49,7 +48,6 @@ public class TeamMemberSQL {
                 int joinDate = cursor.getColumnIndex(TEAM_MEMBER_TABLE_JOIN_DATE);
                 int jobTitle = cursor.getColumnIndex(TEAM_MEMBER_TABLE_JOB_TITLE);
                 int role = cursor.getColumnIndex(TEAM_MEMBER_TABLE_ROLE);
-                int teamId = cursor.getColumnIndex(TEAM_MEMBER_TABLE_TEAM_ID);
 
                 do {
                     String tIndex = cursor.getString(tableIndex);
@@ -57,7 +55,6 @@ public class TeamMemberSQL {
                     String jDate = cursor.getString(joinDate);
                     String jTitle = cursor.getString(jobTitle);
                     String uRole = cursor.getString(role); //0 false / 1 true
-                    String teamInd = cursor.getString(teamId);
 
                     TeamMember.Role newRole;
 
@@ -67,9 +64,8 @@ public class TeamMemberSQL {
                         newRole = TeamMember.Role.EMPLOYEE;
 
                     // public TeamMember(String id, String userId, String joinDate, String jobTitle, Role role)
-                    //public enum Role {MANAGER, EMPLOYEE}
-                    TeamMember tm = new TeamMember(tIndex, uIndex, jDate, jTitle, newRole);
-                    teamMembers.add(tm);
+                    TeamMember st = new TeamMember(tIndex, uIndex, jDate, jTitle, newRole); //public enum Role {MANAGER, EMPLOYEE}
+                    teamMembers.add(st);
                 } while (cursor.moveToNext());
             }
             return teamMembers;
@@ -86,14 +82,12 @@ public class TeamMemberSQL {
                 int joinDate = cursor.getColumnIndex(TEAM_MEMBER_TABLE_JOIN_DATE);
                 int jobTitle = cursor.getColumnIndex(TEAM_MEMBER_TABLE_JOB_TITLE);
                 int role = cursor.getColumnIndex(TEAM_MEMBER_TABLE_ROLE);
-                int teamId = cursor.getColumnIndex(TEAM_MEMBER_TABLE_TEAM_ID);
 
                 String tIndex = cursor.getString(tableIndex);
                 String uIndex = cursor.getString(userIndex);
                 String jDate = cursor.getString(joinDate);
                 String jTitle = cursor.getString(jobTitle);
                 String uRole = cursor.getString(role); //0 false / 1 true
-                String teamInd = cursor.getString(teamId);
                 TeamMember.Role newRole;
                     if(uRole == "MANAGER")
                         newRole = TeamMember.Role.MANAGER;
@@ -113,7 +107,7 @@ public class TeamMemberSQL {
             values.put(TEAM_MEMBER_TABLE_JOIN_DATE, tm.getJoinDate());
             values.put(TEAM_MEMBER_TABLE_JOB_TITLE, tm.getJobTitle());
             values.put(TEAM_MEMBER_TABLE_ROLE,      tm.getRole().toString());
-            values.put(TEAM_MEMBER_TABLE_TEAM_ID,   tm.getTeamId());
+
             db.insert(TEAM_MEMBER_TABLE, TEAM_MEMBER_TABLE_ID, values); // "TEAM_MEMBER_TABLE_ID" can't be null
         }
     }
