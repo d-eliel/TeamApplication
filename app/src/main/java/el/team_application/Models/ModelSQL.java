@@ -7,6 +7,7 @@ import el.team_application.Models.Entities.Member;
 import el.team_application.Models.Entities.Team;
 import el.team_application.Models.Entities.TeamMember;
 import el.team_application.Models.Entities.User;
+import el.team_application.Models.QueriesSQL.TaskSQL;
 import el.team_application.Models.QueriesSQL.TeamMemberSQL;
 import el.team_application.Models.QueriesSQL.TeamSQL;
 import el.team_application.Models.QueriesSQL.UserSQL;
@@ -72,8 +73,10 @@ public class ModelSQL {
         SQLiteDatabase db = sqlDb.getWritableDatabase();
         TeamMemberSQL.add(db,tm);
     }
-
-    public void removeMember(){
+//rmv
+    public void removeMember(String id){
+        SQLiteDatabase db = sqlDb.getWritableDatabase();
+        TeamMemberSQL.delete(db,id);
 
     }
 
@@ -153,11 +156,16 @@ public class ModelSQL {
             UserSQL.create(db);
             TeamSQL.create(db);
             TeamMemberSQL.create(db);
+            TaskSQL.create(db);
+            //Log.w("ModelSQL", "OnCreate DB");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            TaskSQL.drop(db);
             TeamMemberSQL.drop(db);
+            TeamSQL.drop(db);
+            UserSQL.drop(db);
             onCreate(db);
         }
     }
