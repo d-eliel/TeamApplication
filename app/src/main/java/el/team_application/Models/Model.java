@@ -41,8 +41,8 @@ public class Model {
 
     // our db models
     User loggedInUser;
-    ModelPARSE modelPARSE = new ModelPARSE();
-    ModelSQL modelSQL = new ModelSQL();
+    ModelSQL modelSQL       = new ModelSQL();
+    ModelPARSE modelPARSE   = new ModelPARSE();
 
     // singleton Model instance - exists only once in the memory
     private final static Model instance = new Model();
@@ -118,17 +118,17 @@ public class Model {
         modelPARSE.addTask(task, addTaskListener);
     }
 
-    public void deleteTask(){
-
-    }
-
-    public void editTask(Task task, EditTaskListener editTaskListener){
-        modelPARSE.editTask(task, editTaskListener);
-    }
-
-    public void getTask(String taskId, GetTaskListener getTaskListener){
-        modelPARSE.getTask(taskId, getTaskListener);
-    }
+//    public void deleteTask(){
+//
+//    }
+//
+//    public void editTask(Task task, EditTaskListener editTaskListener){
+//        modelPARSE.editTask(task, editTaskListener);
+//    }
+//
+//    public void getTask(String taskId, GetTaskListener getTaskListener){
+//        modelPARSE.getTask(taskId, getTaskListener);
+//    }
 
 //    public void getTeamTasks(){
 //

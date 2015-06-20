@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.UUID;
 
 import el.team_application.Listeners.Tasks.AddTaskListener;
+import el.team_application.Listeners.Tasks.GetTaskListener;
 import el.team_application.Listeners.Teams.EditTeamListener;
 import el.team_application.Listeners.Teams.GetTeamByIdListener;
 import el.team_application.Listeners.User.GetTeamUsersCallback;
@@ -52,7 +53,10 @@ public class AddTaskActivity extends ActionBarActivity {
         // Get team id from intent
         Intent getIntent = getIntent();
         String teamid = getIntent.getExtras().getString("teamId");
+        final String taskId = getIntent.getExtras().getString("taskId"); // in edit mode
 
+
+        final TextView activityHeader   = (TextView) findViewById(R.id.add_task_header_tv);
         final Button newTaskBtn         = (Button) findViewById(R.id.add_task_add_btn);
         final EditText nameET           = (EditText) findViewById(R.id.add_task_name_et);
         final EditText startET          = (EditText) findViewById(R.id.add_task_start_et);
@@ -76,6 +80,25 @@ public class AddTaskActivity extends ActionBarActivity {
             @Override
             public void onResult(Team team, Exception e) {
                 currentTeam = team;
+                Task currentTask = null;
+                if(taskId != null){
+                    for(Task task : team.getTaskList()){
+                        if(task.getId().equals(taskId)){
+                            currentTask = task;
+                            activityHeader.setText("Edit Task");
+                            newTaskBtn.setText("Save");
+                            taskMembersIds = currentTask.getMemberList();
+                            adapter.notifyDataSetChanged();
+                            nameET.setText(currentTask.getName());
+                            startET.setText(currentTask.getStartDate());
+                            endET.setText(currentTask.getEndDate());
+                            associationET.setText(currentTask.getAssociation());
+                            descriptionET.setText(currentTask.getDescription());
+                            break;
+                        }
+                    }
+                }
+
                 adapter.notifyDataSetChanged();
                 for (TeamMember member : team.getMemberList()) {
                     if (member.getUserId().equals(loggedInUser.getId())) {
@@ -83,6 +106,8 @@ public class AddTaskActivity extends ActionBarActivity {
                         break;
                     }
                 }
+
+                final Task finalCurrentTask = currentTask;
                 newTaskBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -100,20 +125,32 @@ public class AddTaskActivity extends ActionBarActivity {
                             return;
                         }
 
-                        Task newTask = new Task(
-                                UUID.randomUUID().toString(),
-                                startET.getText().toString(),
-                                currentTeamMember,
-                                nameET.getText().toString());
+                        if(taskId == null) {
+                            // add task
+                            Task newTask = new Task(
+                                    UUID.randomUUID().toString(),
+                                    startET.getText().toString(),
+                                    currentTeamMember,
+                                    nameET.getText().toString());
 
-                        newTask.setEndDate(endET.getText().toString());
-                        newTask.setAssociation(associationET.getText().toString());
-                        newTask.setDescription(descriptionET.getText().toString());
-                        newTask.setMemberList(taskMembersIds);
-
-                        List<Task> currentTasks = currentTeam.getTaskList();
-                        currentTasks.add(newTask);
-                        currentTeam.setTaskList(currentTasks);
+                            newTask.setEndDate(endET.getText().toString());
+                            newTask.setAssociation(associationET.getText().toString());
+                            newTask.setDescription(descriptionET.getText().toString());
+                            newTask.setMemberList(taskMembersIds);
+                            List<Task> currentTasks = currentTeam.getTaskList();
+                            currentTasks.add(newTask);
+                            currentTeam.setTaskList(currentTasks);
+                        }else{
+                            // edit task
+                            List<Task> currentTasks = currentTeam.getTaskList();
+                            for(int i=0; i<currentTasks.size(); i++){
+                                if(finalCurrentTask.getId().equals(currentTasks.get(i).getId())){
+                                    currentTasks.set(i,finalCurrentTask);
+                                    break;
+                                }
+                            }
+                            currentTeam.setTaskList(currentTasks);
+                        }
 
                         Model.getInstance().editTeam(currentTeam, new EditTeamListener() {
                             @Override
@@ -124,12 +161,12 @@ public class AddTaskActivity extends ActionBarActivity {
                             }
                         });
 
-                        Model.getInstance().addTask(newTask, new AddTaskListener() {
-                            @Override
-                            public void onResult(Exception e) {
-
-                            }
-                        });
+//                        Model.getInstance().addTask(newTask, new AddTaskListener() {
+//                            @Override
+//                            public void onResult(Exception e) {
+//
+//                            }
+//                        });
                     }
                 });
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
+import el.team_application.ActivityViews.Activities.AddTaskActivity;
 import el.team_application.ActivityViews.Activities.EditTaskActivity;
 import el.team_application.ActivityViews.Activities.MyTeamsActivity;
 import el.team_application.ActivityViews.Adapters.TasksListAdapter;
@@ -82,7 +83,7 @@ public class TeamAllTasksFragment extends Fragment {
         tasksListLayout = (LinearLayout) v.findViewById(R.id.team_tasks_list_layout);
 
         // get team id argument
-        String teamid = getArguments().getString("teamId");
+        final String teamid = getArguments().getString("teamId");
         tasksListView = (ListView) v.findViewById(R.id.team_tasks_list);
         taskMembersListView = (ListView) v.findViewById(R.id.team_tasks_task_members_list);
 
@@ -91,12 +92,15 @@ public class TeamAllTasksFragment extends Fragment {
 
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
                 /* set edit button listener */
+                selectedEdit.setVisibility(View.VISIBLE);
                 selectedEdit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity().getApplicationContext(), EditTaskActivity.class);
+                        Intent intent = new Intent(getActivity().getApplicationContext(), AddTaskActivity.class);
+                        intent.putExtra("taskId",_dataList.get(position).getId());
+                        intent.putExtra("teamId",teamid);
                         startActivity(intent);
                     }
                 });

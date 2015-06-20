@@ -46,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:text="Edit"
                 android:id="@+id/team_tasks_task_edit_btn"
-                android:layout_gravity="right|top" />
+                android:layout_gravity="right|top"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -1,10 +1,14 @@
 package el.team_application.ActivityViews.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import el.team_application.Listeners.Tasks.GetTaskListener;
+import el.team_application.Models.Entities.Task;
+import el.team_application.Models.Model;
 import el.team_application.R;
 
 public class EditTaskActivity extends ActionBarActivity {
@@ -13,6 +17,10 @@ public class EditTaskActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        Intent getIntent = getIntent();
+        String taskId = getIntent.getExtras().getString("taskId");
+
     }
 
     @Override

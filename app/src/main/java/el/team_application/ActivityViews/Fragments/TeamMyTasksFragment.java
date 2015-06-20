@@ -1,6 +1,7 @@
 package el.team_application.ActivityViews.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
+import el.team_application.ActivityViews.Activities.AddTaskActivity;
 import el.team_application.ActivityViews.Adapters.TasksListAdapter;
 import el.team_application.ActivityViews.Adapters.TaskMembersListAdapter;
 import el.team_application.Listeners.Teams.GetTeamByIdListener;
@@ -65,6 +68,7 @@ public class TeamMyTasksFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_team_tasks,container,false);
 
         /* Selected task view details */
+        final Button selectedEdit = (Button) v.findViewById(R.id.team_tasks_task_edit_btn);
         final TextView selectedName = (TextView) v.findViewById(R.id.team_tasks_task_name);
         final TextView selectedStatus = (TextView) v.findViewById(R.id.team_tasks_task_status);
         final TextView selectedStart = (TextView) v.findViewById(R.id.team_tasks_task_start);
@@ -76,7 +80,7 @@ public class TeamMyTasksFragment extends Fragment {
         tasksListLayout = (LinearLayout) v.findViewById(R.id.team_tasks_list_layout);
 
         // get team id argument
-        String teamid = getArguments().getString("teamId");
+        final String teamid = getArguments().getString("teamId");
         tasksListView = (ListView) v.findViewById(R.id.team_tasks_list);
         taskMembersListView = (ListView) v.findViewById(R.id.team_tasks_task_members_list);
 
@@ -85,7 +89,19 @@ public class TeamMyTasksFragment extends Fragment {
 
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                 /* set edit button listener */
+                selectedEdit.setVisibility(View.VISIBLE);
+                selectedEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity().getApplicationContext(), AddTaskActivity.class);
+                        intent.putExtra("taskId",_dataList.get(position).getId());
+                        intent.putExtra("teamId",teamid);
+                        startActivity(intent);
+                    }
+                });
+
                 selectedName.setText("Task Name: \t"+_dataList.get(position).getName());
                 selectedStatus.setText("Status: \t"+_dataList.get(position).getStatus().toString());
                 selectedStart.setText("Start Date: \t"+_dataList.get(position).getStartDate());
