@@ -15,7 +15,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:id="@+id/team_tasks_list_layout" >
+            android:id="@+id/team_tasks_list_layout"
+            android:background="#8dc1bfbc">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,6 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:id="@+id/team_tasks_details_layout" >
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:id="@+id/team_tasks_task_edit_btn"
+                android:layout_gravity="right|top" />
 
             <TextView
                 android:layout_width="match_parent"

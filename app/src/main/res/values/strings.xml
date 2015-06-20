@@ -19,4 +19,6 @@
     <string name="title_activity_add_task">AddTaskActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_invitations">InvitationsActivity</string>
+    <string name="title_activity_edit_task">EditTaskActivity</string>
+    <string name="title_activity_edit_team_member">EditTeamMemberActivity</string>
 </resources>

@@ -1,6 +1,7 @@
 package el.team_application.ActivityViews.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
+import el.team_application.ActivityViews.Activities.EditTaskActivity;
+import el.team_application.ActivityViews.Activities.MyTeamsActivity;
 import el.team_application.ActivityViews.Adapters.TasksListAdapter;
 import el.team_application.ActivityViews.Adapters.TaskMembersListAdapter;
 import el.team_application.Listeners.Teams.GetTeamByIdListener;
@@ -66,6 +70,7 @@ public class TeamAllTasksFragment extends Fragment {
 //        final TextView emptyListMessage = (TextView) v.findViewById(R.id.team)
 
         /* Selected task view details */
+        final Button selectedEdit = (Button) v.findViewById(R.id.team_tasks_task_edit_btn);
         final TextView selectedName = (TextView) v.findViewById(R.id.team_tasks_task_name);
         final TextView selectedStatus = (TextView) v.findViewById(R.id.team_tasks_task_status);
         final TextView selectedStart = (TextView) v.findViewById(R.id.team_tasks_task_start);
@@ -87,6 +92,15 @@ public class TeamAllTasksFragment extends Fragment {
         tasksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                /* set edit button listener */
+                selectedEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity().getApplicationContext(), EditTaskActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
                 selectedName.setText("Task Name: \t"+_dataList.get(position).getName());
                 selectedStatus.setText("Status: \t"+_dataList.get(position).getStatus().toString());
                 selectedStart.setText("Start Date: \t"+_dataList.get(position).getStartDate());
