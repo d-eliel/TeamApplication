@@ -21,6 +21,7 @@ public class Task {
     String association;
     List<Task> listOfSubTasks;
     List<String> membersIdList;
+    String teamId;
 
     // constructor
     public Task(String id, String startDate, TeamMember creator, String name) {
@@ -32,6 +33,20 @@ public class Task {
         listOfSubTasks = new LinkedList<>();
         membersIdList = new LinkedList<>();
     }
+
+    /* constructor for sql model
+    public Task(String id, String name, TeamMember creator, String startDate, String endDate, String description, String association ) {
+        this.id = id;
+        this.name = name;
+        this.creator = creator;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = Status.NOTHING; //starts with 0%
+        this.description = description;
+        listOfSubTasks = new LinkedList<>();
+        membersIdList = new LinkedList<>();
+    }
+    */
 
     // getters and setters
     public String getId() {
@@ -113,4 +128,21 @@ public class Task {
     public void setAssociation(String association) {
         this.association = association;
     }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
+    public List<String> getMembersIdList() {
+        return membersIdList;
+    }
+
+    public void setMembersIdList(List<String> membersIdList) {
+        this.membersIdList = membersIdList;
+    }
+
 }

@@ -16,12 +16,12 @@ import el.team_application.Models.Entities.TeamMember;
 public class TeamMemberSQL {
         //provide access to TeamMember Table in SQLite - CRUD
 
-        final static String TEAM_MEMBER_TABLE = "team_member"; //table name
-        final static String TEAM_MEMBER_TABLE_ID = "_id";
-        final static String TEAM_MEMBER_TABLE_USER_ID = "userId";
+        final static String TEAM_MEMBER_TABLE           = "team_member"; //table name
+        final static String TEAM_MEMBER_TABLE_ID        = "_id";
+        final static String TEAM_MEMBER_TABLE_USER_ID   = "userId";
         final static String TEAM_MEMBER_TABLE_JOIN_DATE = "joinDate";
         final static String TEAM_MEMBER_TABLE_JOB_TITLE = "jobTitle";
-        final static String TEAM_MEMBER_TABLE_ROLE = "role";
+        final static String TEAM_MEMBER_TABLE_ROLE      = "role";
 
         static public void create(SQLiteDatabase db) {
             db.execSQL("create table " + TEAM_MEMBER_TABLE + " (" +
