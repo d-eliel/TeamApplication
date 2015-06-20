@@ -4,6 +4,7 @@ import el.team_application.Listeners.User.AfterLoginCallback;
 import el.team_application.Listeners.User.AfterRegisterCallback;
 import el.team_application.Listeners.User.GetSessionCallback;
 import el.team_application.Models.Entities.Member;
+import el.team_application.Models.Entities.Task;
 import el.team_application.Models.Entities.Team;
 import el.team_application.Models.Entities.TeamMember;
 import el.team_application.Models.Entities.User;
@@ -96,24 +97,29 @@ public class ModelSQL {
 
     //region Task CRUD
 
-    public void addTask(){
-
+    public void addTask(Task task){
+        SQLiteDatabase db = sqlDb.getWritableDatabase();
+        TaskSQL.add(db, task);
     }
 
-    public void deleteTask(){
-
+    public void deleteTask(Task task){
+        SQLiteDatabase db = sqlDb.getWritableDatabase();
+        TaskSQL.delete(db, task.getId());
     }
 
-    public void editTask(){
-
+    public void editTask(Task task){
+        SQLiteDatabase db = sqlDb.getWritableDatabase();
+        TaskSQL.edit(db, task);
     }
 
-    public void getTask(){
-
+    public Task getTask(String taskId){
+        SQLiteDatabase db = sqlDb.getWritableDatabase();
+        return TaskSQL.getById(db, taskId);
     }
 
-    public void getTeamTasks(){
-
+    public void getTeamTasks(String teamId){
+        SQLiteDatabase db = sqlDb.getReadableDatabase();
+        TaskSQL.getTeamTasks(db, teamId);
     }
 
     public void getUserTasks(){
