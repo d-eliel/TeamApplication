@@ -1,8 +1,8 @@
 package el.team_application.Models;
 
-import el.team_application.Listeners.UserAuth.AfterLoginCallback;
-import el.team_application.Listeners.UserAuth.AfterRegisterCallback;
-import el.team_application.Listeners.UserAuth.GetSessionCallback;
+import el.team_application.Listeners.User.AfterLoginCallback;
+import el.team_application.Listeners.User.AfterRegisterCallback;
+import el.team_application.Listeners.User.GetSessionCallback;
 import el.team_application.Models.Entities.User;
 
 /**

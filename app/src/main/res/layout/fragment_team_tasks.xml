@@ -1,0 +1,100 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="el.team_application.ActivityViews.Fragments.TeamMyTasksFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:id="@+id/team_tasks_list_layout" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="No Tasks"
+                android:id="@+id/team_tasks_empty_message"
+                android:layout_gravity="center_horizontal|top" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/team_tasks_list"
+                android:layout_gravity="top" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:id="@+id/team_tasks_details_layout" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_name"
+                android:editable="false"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_status"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_start"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_end"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_association"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_description"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/team_tasks_task_total_members"
+                android:layout_gravity="left" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/team_tasks_task_members_list"
+                android:layout_gravity="center"
+                android:choiceMode="multipleChoice" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

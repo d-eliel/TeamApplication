@@ -23,7 +23,14 @@ public class TeamMember extends Member {
 
     // constructor
     public TeamMember(String id, String userId, String joinDate, String jobTitle, Role role) {
-        super(id, userId, jobTitle, joinDate);
-        this.role = role;
+        super(id, userId, joinDate, jobTitle);
+        if(role == null)
+            this.role = Role.EMPLOYEE;
+        else
+            this.role = role;
+
+        if(jobTitle == null)
+            this.jobTitle = role.toString();
+
     }
 }

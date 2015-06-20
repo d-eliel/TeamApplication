@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="el.team_application.ActivityViews.Activities.TeamActivity">
+    <item
+        android:id="@+id/menu_team_members_collapse_list"
+        android:orderInCategory="100"
+        android:title="Collapse List"
+        android:icon="@mipmap/menu_burger_50"
+        app:showAsAction="always"
+        ></item>
+    <item
+        android:id="@+id/menu_team_members_action_new"
+        android:orderInCategory="200"
+        android:title="New Member"
+        android:icon="@mipmap/ic_user"
+        app:showAsAction="ifRoom"></item>
+</menu>

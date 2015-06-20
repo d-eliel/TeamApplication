@@ -1,6 +1,7 @@
 package el.team_application.Models.Entities;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,21 +14,23 @@ public class Task {
     String id;
     String name;
     TeamMember creator;
-    Date startDate;
-    Date endDate;
+    String startDate;
+    String endDate;
     Status status;
     String description;
     String association;
     List<Task> listOfSubTasks;
-    List<TeamMember> memberList;
+    List<String> membersIdList;
 
     // constructor
-    public Task(String id, Date startDate, TeamMember creator, String name) {
+    public Task(String id, String startDate, TeamMember creator, String name) {
         this.id = id;
         this.startDate = startDate;
         this.creator = creator;
         this.name = name;
         this.status = Status.NOTHING; //starts with 0%
+        listOfSubTasks = new LinkedList<>();
+        membersIdList = new LinkedList<>();
     }
 
     // getters and setters
@@ -55,19 +58,19 @@ public class Task {
         this.creator = creator;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -79,12 +82,12 @@ public class Task {
         this.listOfSubTasks = listOfSubTasks;
     }
 
-    public List<TeamMember> getMemberList() {
-        return memberList;
+    public List<String> getMemberList() {
+        return membersIdList;
     }
 
-    public void setMemberList(List<TeamMember> memberList) {
-        this.memberList = memberList;
+    public void setMemberList(List<String> memberList) {
+        this.membersIdList = memberList;
     }
 
     public Status getStatus() {

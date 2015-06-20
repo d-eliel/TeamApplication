@@ -20,11 +20,14 @@ public class Member {
 
     // constructor
 
-    public Member(String id, String userId, String jobTitle, String joinDate) {
+    public Member(String id, String userId, String joinDate, String jobTitle) {
         this.id = id;
         this.userId = userId;
-        this.jobTitle = jobTitle;
         this.joinDate = joinDate;
+        if(jobTitle == null)
+            this.jobTitle = "";
+        else
+            this.jobTitle = jobTitle;
     }
 
     //getters and setters

@@ -20,6 +20,7 @@ public class Team {
         this.name = name;
         this.memberList = new LinkedList<TeamMember>();
         this.memberList.addAll(members);
+        this.taskList = new LinkedList<Task>();
     }
 
     //getters and setters
