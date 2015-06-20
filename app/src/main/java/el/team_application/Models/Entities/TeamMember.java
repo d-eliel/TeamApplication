@@ -12,6 +12,7 @@ public class TeamMember extends Member {
     // members - (default protected)
     Role role = Role.EMPLOYEE; //default Role is Employee
 
+
     // getters and setters
     public Role getRole() {
         return role;
