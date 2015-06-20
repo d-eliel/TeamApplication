@@ -21,6 +21,7 @@ public class TeamMember extends Member {
         this.role = role;
     }
 
+
     // constructor
     public TeamMember(String id, String userId, String joinDate, String jobTitle, Role role) {
         super(id, userId, joinDate, jobTitle);
@@ -31,6 +32,5 @@ public class TeamMember extends Member {
 
         if(jobTitle == null)
             this.jobTitle = role.toString();
-
     }
 }

@@ -60,7 +60,9 @@ public class Model {
     //region Team CRUD
 
     public void createTeam(Team team, CreateTeamListener createTeamListener){
+
         modelPARSE.createTeam(team, createTeamListener);
+
     }
 
     public void removeTeam(String id, RemoveTeamListener removeTeamListener){
@@ -72,6 +74,7 @@ public class Model {
     }
 
     public void getMyTeams(String userId, GetMyTeamsListener listener){
+
         modelPARSE.getMyTeams(userId, listener);
     }
 
