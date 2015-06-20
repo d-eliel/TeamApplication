@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="el.team_application.ActivityViews.Activities.MyTeamsActivity">
+
+    <item android:id="@+id/menu_my_teams_create_team"
+        android:title="@string/menu_my_teams_create_team"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_my_teams_action_logoff"
+        android:orderInCategory="200"
+        android:title="Logoff"
+        app:showAsAction="ifRoom"></item>
+
+    <item
+        android:id="@+id/menu_my_teams_action_exit"
+        android:orderInCategory="300"
+        android:title="Exit"
+        app:showAsAction="ifRoom"></item>
+</menu>
