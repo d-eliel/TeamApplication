@@ -38,7 +38,7 @@ public class TeamMemberSQL {
         }
 
         public static List<TeamMember> getAllTeamMembers(SQLiteDatabase db) {
-            Cursor cursor = db.query(TEAM_MEMBER_TABLE, null, null, null, null, null);//??
+            Cursor cursor = db.query(TEAM_MEMBER_TABLE, null, null, null, null, null, null);
             List<TeamMember> teamMembers = new LinkedList<TeamMember>();
 
             if (cursor.moveToFirst()) {
