@@ -84,7 +84,7 @@ public class InvitationsActivity extends ActionBarActivity {
             case R.id.menu_my_teams_action_exit:
                 Toast.makeText(getApplicationContext(), "Exit   ", Toast.LENGTH_LONG).show();
                 finish();
-                System.exit(1);
+                System.exit(0);
         }
 
         return super.onOptionsItemSelected(item);

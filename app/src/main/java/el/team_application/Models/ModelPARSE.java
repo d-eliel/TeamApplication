@@ -1,5 +1,7 @@
 package el.team_application.Models;
 
+import android.content.Context;
+
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -8,6 +10,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseSession;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
@@ -29,10 +32,12 @@ import el.team_application.Listeners.Members.AddMemberListener;
 import el.team_application.Listeners.Members.EditMemberListener;
 import el.team_application.Listeners.Members.GetAllTeamMembersListener;
 import el.team_application.Listeners.Members.GetMemberByIdListener;
+import el.team_application.Listeners.Members.GetMembersForTaskCallback;
 import el.team_application.Listeners.Members.RemoveMemberListener;
 import el.team_application.Listeners.Tasks.AddTaskListener;
 import el.team_application.Listeners.Tasks.EditTaskListener;
 import el.team_application.Listeners.Tasks.GetTaskListener;
+import el.team_application.Listeners.Tasks.RemoveTaskListener;
 import el.team_application.Listeners.Teams.CreateTeamListener;
 import el.team_application.Listeners.Teams.EditTeamListener;
 import el.team_application.Listeners.Teams.GetMyTeamsListener;
@@ -41,24 +46,38 @@ import el.team_application.Listeners.Teams.RemoveTeamListener;
 import el.team_application.Listeners.User.AfterLoginCallback;
 import el.team_application.Listeners.User.AfterRegisterCallback;
 import el.team_application.Listeners.User.GetSessionCallback;
+import el.team_application.Listeners.User.GetSessionUserCallback;
 import el.team_application.Listeners.User.GetTeamUsersCallback;
 import el.team_application.Listeners.User.GetUserByEmailCallback;
 import el.team_application.Listeners.User.GetUserByIdCallback;
 import el.team_application.Listeners.User.GetUsersToAddCallback;
 import el.team_application.Listeners.User.JoinUserToTeamCallback;
 import el.team_application.Models.Entities.Invitation;
+import el.team_application.Models.Entities.Session;
 import el.team_application.Models.Entities.Task;
 import el.team_application.Models.Entities.Team;
 import el.team_application.Models.Entities.TeamMember;
+import el.team_application.Models.Entities.Unsynced;
 import el.team_application.Models.Entities.User;
 
 /**
  * Created by ariel-mac on 24/05/2015.
  */
-public class ModelPARSE {
+public class ModelPARSE implements InterfaceModel{
+
+    @Override
+    public void init(Context context){
+
+    }
+
+    @Override
+    public void emptyTables(){}
 
     //region Team CRUD
+    @Override
+    public void createTeamSync(Team team){}
 
+    @Override
    public void createTeam(Team team, CreateTeamListener createTeamListener){
         /* team to parse object */
         ParseObject parseObject = teamToParseObject(team);
@@ -68,19 +87,19 @@ public class ModelPARSE {
         ParseUser loggedUser = ParseUser.getCurrentUser();
         JSONArray myArray = loggedUser.getJSONArray("myTeams");
         myArray.put(team.getId());
-        loggedUser.put("myTeams",myArray);
+        loggedUser.put("myTeams", myArray);
         loggedUser.saveInBackground();
     }
 
-    public void removeTeam(String id, RemoveTeamListener removeTeamListener){
+    @Override
+    public void removeTeam(Team team, RemoveTeamListener removeTeamListener){
 
     }
 
-    /***
-     * Get Team Object and update its - members, tasks and name
-     * @param team
-     * @param editTeamListener
-     */
+    @Override
+    public void editTeamSync(Team team){}
+
+    @Override
     public void editTeam(Team team, final EditTeamListener editTeamListener){
         final ParseObject newTeam = teamToParseObject(team);
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Team");
@@ -101,6 +120,7 @@ public class ModelPARSE {
         });
     }
 
+    @Override
     public void getMyTeams(String userId, final GetMyTeamsListener listener){
         final ParseUser loggedUser = ParseUser.getCurrentUser();
         JSONArray teamsArr = loggedUser.getJSONArray("myTeams");
@@ -121,6 +141,7 @@ public class ModelPARSE {
 
     }
 
+    @Override
     public void getTeamById(String teamId, final GetTeamByIdListener getTeamByIdListener){
         ParseQuery<ParseObject> query = new ParseQuery("Team");
         query.whereEqualTo("teamId", teamId);
@@ -132,6 +153,12 @@ public class ModelPARSE {
         });
     }
 
+    @Override
+    public Team getTeamByIdSync(String teamId) {
+        return null; // works for sql
+    }
+
+    // TODO - move OUT
     private ParseObject teamToParseObject (Team team){
         JSONArray membersArray  = new JSONArray();
         List<TeamMember> membersList = team.getMemberList();
@@ -156,13 +183,16 @@ public class ModelPARSE {
         return parseObject;
     }
 
+    // TODO - move OUT
     private Team parseObjectToTeam(ParseObject team) {
         // set team members
         List<TeamMember> members = new LinkedList<>();
         JSONArray membersArr = team.getJSONArray("members");
         for(int i=0; i<membersArr.length(); i++){
             try {
-                members.add(jsonObjectToTeamMember(membersArr.getJSONObject(i)));
+                TeamMember member = jsonObjectToTeamMember(membersArr.getJSONObject(i));
+                member.setTeamId(team.getString("teamId"));
+                members.add(member);
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
@@ -173,7 +203,9 @@ public class ModelPARSE {
         JSONArray tasksArr = team.getJSONArray("tasks");
         for(int i=0; i<tasksArr.length(); i++){
             try {
-                tasks.add(jsonObjectToTask(tasksArr.getJSONObject(i)));
+                Task newtask = jsonObjectToTask(tasksArr.getJSONObject(i));
+                newtask.getCreator().setTeamId(team.getString("teamId"));
+                tasks.add(newtask);
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
@@ -187,6 +219,7 @@ public class ModelPARSE {
         return newTeam;
     }
 
+    // TODO - move OUT
     private TeamMember jsonObjectToTeamMember(JSONObject jsonMember){
         TeamMember member = null;
         try {
@@ -208,6 +241,7 @@ public class ModelPARSE {
         return member;
     }
 
+    // TODO - move OUT
     private Task jsonObjectToTask(JSONObject jsonObject) {
         Task task = null;
         try{
@@ -233,16 +267,26 @@ public class ModelPARSE {
 
     //region TeamMember CRUD
 
-    public void addMember(TeamMember member, final AddMemberListener addMemberListener){
-        ParseObject parseObject = teamMemberToParseObject(member);
-        parseObject.saveInBackground(new SaveCallback() {
+    @Override
+    public void addMember(final TeamMember member, final AddMemberListener addMemberListener){
+        // add new TeamMember to his team - by the team Id of the object
+        getTeamById(member.getTeamId(), new GetTeamByIdListener() {
             @Override
-            public void done(ParseException e) {
-                addMemberListener.onResult(e);
+            public void onResult(Team team, Exception e) {
+                List<TeamMember> list = team.getMemberList();
+                list.add(member);
+                team.setMemberList(list);
+                editTeam(team, new EditTeamListener() {
+                    @Override
+                    public void onResult(Exception e) {
+                        addMemberListener.onResult(e);
+                    }
+                });
             }
         });
     }
 
+    // TODO move - OUT
     private ParseObject teamMemberToParseObject(TeamMember member) {
         ParseObject parseObject = new ParseObject("TeamMember");
         String role;
@@ -259,6 +303,7 @@ public class ModelPARSE {
         return parseObject;
     }
 
+    // TODO - move OUT
     private JSONObject teamMemberToJsonObject(TeamMember member) {
         JSONObject object = new JSONObject();
         String role;
@@ -279,19 +324,64 @@ public class ModelPARSE {
         return object;
     }
 
-    public void removeMember(String id, RemoveMemberListener removeMemberListener){
+    @Override
+    public void removeMember(final TeamMember member, final RemoveMemberListener removeMemberListener){
+        getTeamById(member.getTeamId(), new GetTeamByIdListener() {
+            @Override
+            public void onResult(Team team, Exception e) {
+                List<TeamMember> list = team.getMemberList();
+                list.remove(member);
+                team.setMemberList(list);
 
+                // remove memberId from Tasks
+                for(Task task : team.getTaskList()){
+                    if(task.getMemberList().contains(member.getId())){
+                        team.getTaskList().remove(task);
+                        task.getMemberList().remove(member.getId());
+                        team.getTaskList().add(task);
+                    }
+                }
+                editTeam(team, new EditTeamListener() {
+                    @Override
+                    public void onResult(Exception e) {
+                        removeMemberListener.onResult(e);
+                    }
+                });
+            }
+        });
     }
 
-    public void editMember(TeamMember member, EditMemberListener editMemberListener){
-
+    @Override
+    public void editMember(final TeamMember member, final EditMemberListener editMemberListener){
+        // edit TeamMember in the team - by the team Id of the object
+        getTeamById(member.getTeamId(), new GetTeamByIdListener() {
+            @Override
+            public void onResult(Team team, Exception e) {
+                List<TeamMember> list = team.getMemberList();
+                for(int i=0; i<list.size(); i++){
+                    if(member.getId().equals(list.get(i).getId())){
+                        list.set(i,member);
+                        break;
+                    }
+                }
+                team.setMemberList(list);
+                editTeam(team, new EditTeamListener() {
+                    @Override
+                    public void onResult(Exception e) {
+                        editMemberListener.onResult(e);
+                    }
+                });
+            }
+        });
     }
 
+    @Override
     public void getMemberById(String id, GetMemberByIdListener getMemberByIdListener){
-
+        // TODO
     }
 
-    public void getAllTeamMembers(String teamId, final GetAllTeamMembersListener getAllTeamMembersListener){
+    @Override
+    public void getMembersForTeam(String teamId, final GetAllTeamMembersListener getAllTeamMembersListener){
         ParseQuery<ParseObject> query = new ParseQuery("Team");
         query.whereEqualTo("teamId",teamId);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -318,24 +408,36 @@ public class ModelPARSE {
         });
     }
 
-    public void getAllTaskMembers(){
-
+    @Override
+    public void getMembersForTask(String taskId, GetMembersForTaskCallback getMembersForTaskCallback) {
+        // TODO
     }
+
 
     //endregion
 
     //region Task CRUD
 
-    public void addTask(Task task, final AddTaskListener addTaskListener ){
-        ParseObject parseObject = taskToParseObject(task);
-        parseObject.saveInBackground(new SaveCallback() {
+    @Override
+    public void addTask(final Task task, final AddTaskListener addTaskListener ){
+        // add new Task to team - by the team Id of the object
+        getTeamById(task.getTeamId(), new GetTeamByIdListener() {
             @Override
-            public void done(ParseException e) {
-                addTaskListener.onResult(e);
+            public void onResult(Team team, Exception e) {
+                List<Task> list = team.getTaskList();
+                list.add(task);
+                team.setTaskList(list);
+                editTeam(team, new EditTeamListener() {
+                    @Override
+                    public void onResult(Exception e) {
+                        addTaskListener.onResult(e);
+                    }
+                });
             }
         });
     }
 
+    // TODO - move OUT
     private JSONObject taskToJsonObject(Task task) {
         JSONObject object = new JSONObject();
         String status = taskStatusToString(task.getStatus());
@@ -362,6 +464,7 @@ public class ModelPARSE {
         return object;
     }
 
+    // TODO - move OUT
     private ParseObject taskToParseObject(Task task) {
         ParseObject parseObject = new ParseObject("Task");
         String status = taskStatusToString(task.getStatus());
@@ -395,6 +498,7 @@ public class ModelPARSE {
         return parseObject;
     }
 
+    // TODO - move OUT
     private String taskStatusToString(Task.Status status) {
         switch (status){
             case NOTHING:
@@ -413,6 +517,7 @@ public class ModelPARSE {
         return "NOTHING";
     }
 
+    // TODO - move OUT
     private Task.Status stringToTaskStatus(String status){
         switch (status){
             case "NOTHING":
@@ -431,34 +536,72 @@ public class ModelPARSE {
         return Task.Status.NOTHING;
     }
 
-    public void editTask(Task task, final EditTaskListener editTaskListener){
-
+    @Override
+    public void editTask(final Task task, final EditTaskListener editTaskListener){
+        getTeamById(task.getTeamId(), new GetTeamByIdListener() {
+            @Override
+            public void onResult(Team team, Exception e) {
+                List<Task> list = team.getTaskList();
+                for(int i=0; i<list.size(); i++){
+                    if(task.getId().equals(list.get(i).getId())){
+                        list.set(i,task);
+                        break;
+                    }
+                }
+                team.setTaskList(list);
+                editTeam(team, new EditTeamListener() {
+                    @Override
+                    public void onResult(Exception e) {
+                        editTaskListener.onResult(e);
+                    }
+                });
+            }
+        });
     }
 
-    public void getTask(String taskId, final GetTaskListener getTaskListener){
-
+    @Override
+    public void removeTask(final Task task, final RemoveTaskListener removeTaskListener){
+        getTeamById(task.getTeamId(), new GetTeamByIdListener() {
+            @Override
+            public void onResult(Team team, Exception e) {
+                List<Task> list = team.getTaskList();
+                list.remove(task);
+                team.setTaskList(list);
+                editTeam(team, new EditTeamListener() {
+                    @Override
+                    public void onResult(Exception e) {
+                        removeTaskListener.onResult(e);
+                    }
+                });
+            }
+        });
     }
 
-//    public void deleteTask(){
-//
-//    }
-//
-//    public void getTeamTasks(){
-//
-//    }
-//
-//    public void getUserTasks(){
-//
-//    }
-//
-//    public void getTeamMemberTasks(){
-//
-//    }
+    @Override
+    public void getTaskById(String taskId, final GetTaskListener getTaskListener){
+        // TODO
+    }
+
+    @Override
+    public void getTeamTasks(String taskId){
+        // TODO
+    }
+
+    @Override
+    public void getUserTasks(String userId){
+        // TODO
+    }
+
+    @Override
+    public void getTeamMemberTasks(String teamMemberId){
+        // TODO
+    }
 
     //endregion
 
     //region Invitation
 
+    @Override
     public void newInvite (Invitation invitation, final NewInviteListener newInviteListener){
         ParseObject poInvite = new ParseObject("Invitation");
         poInvite.put("invitationId",invitation.getId());
@@ -485,6 +628,7 @@ public class ModelPARSE {
      * @param invitation
      * @param acceptInviteListener
      */
+    @Override
     public void acceptInvite(final Invitation invitation, final AcceptInviteListener acceptInviteListener){
         joinUserToTeam(invitation.getInviteeUserId(), invitation.getTeamId(), new JoinUserToTeamCallback() {
             @Override
@@ -545,6 +689,7 @@ public class ModelPARSE {
 
     }
 
+    @Override
     public void declineInvite(Invitation invitation, final DeclineInviteListener declineInviteListener){
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Invitation");
         query.whereEqualTo("invitationId", invitation.getId());
@@ -566,6 +711,7 @@ public class ModelPARSE {
         });
     }
 
+    @Override
     public void getInvitationsForUser(String userId, final GetInvitationsForUserListener getInvitationsListener){
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Invitation");
         query.whereEqualTo("inviteeId", userId);
@@ -616,6 +762,7 @@ public class ModelPARSE {
      * @param user
      * @return
      */
+    // TODO - move OUT
     private User normalizeParseUser(ParseUser user) {
         String email = user.getUsername(); // we use email as username
         String id = user.getString("userId");
@@ -638,6 +785,7 @@ public class ModelPARSE {
      * @param array
      * @return
      */
+    // TODO - move OUT
     private List<String> jsonStringArrayToList(JSONArray array) {
         List<String> list = new LinkedList<>();
         for (int i=0; i<array.length(); i++){
@@ -651,23 +799,57 @@ public class ModelPARSE {
     }
 
     /***
-     * Return the current user that login to parse
+     * Get current session - token
      * @param callback
      */
+    @Override
     public void getSession(final GetSessionCallback callback){
         ParseUser user = ParseUser.getCurrentUser();
         if(user == null){
-            callback.loggedInUser(null);
-        }else{
-            callback.loggedInUser(normalizeParseUser(user));
+            callback.onResult(null);
+            return;
         }
+        String token = user.getSessionToken();
+        Session newSession = new Session (
+                UUID.randomUUID().toString(),
+                user.getString("userId"),
+                token,
+                true,
+                false,
+                new Date().toString());
+        callback.onResult(newSession);
     }
 
+
+    @Override
+    public void getSessionUser(String userId, String parseToken, final GetSessionUserCallback callback){
+        ParseUser.becomeInBackground(parseToken, new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    callback.onResult(normalizeParseUser(user));
+                } else {
+                    // The token could not be validated.
+                    callback.onResult(normalizeParseUser(user));
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setSession(Session session){
+        // setting session on sql
+    }
+
+    @Override
+    public void setSessionUser(User user){
+
+    }
     /***
      * Get single user object by email
      * @param email
      * @param getUserByEmailCallback
      */
+    @Override
     public void getUserByEmail(String email, final GetUserByEmailCallback getUserByEmailCallback){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
@@ -685,6 +867,7 @@ public class ModelPARSE {
      * @param teamId
      * @param getUsersToAddCallback
      */
+    @Override
     public void getUsersToAdd(String teamId, final GetUsersToAddCallback getUsersToAddCallback) {
         ParseQuery query = ParseUser.getQuery();
         query.whereNotEqualTo("myTeams", teamId);
@@ -706,6 +889,7 @@ public class ModelPARSE {
      * @param teamId
      * @param getTeamUsersCallback
      */
+    @Override
     public void getTeamUsers(String teamId, final GetTeamUsersCallback getTeamUsersCallback){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("myTeams", teamId);
@@ -727,6 +911,7 @@ public class ModelPARSE {
      * @param userId
      * @param joinUserToTeamCallback
      */
+    @Override
     public void joinUserToTeam(String userId, final String teamId, final JoinUserToTeamCallback joinUserToTeamCallback){
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("userId", userId);
@@ -756,6 +941,7 @@ public class ModelPARSE {
      * @param password
      * @param callback
      */
+    @Override
     public void login (String email, String password, final AfterLoginCallback callback){
         ParseUser.logInInBackground(email, password, new LogInCallback() {
             @Override
@@ -777,8 +963,9 @@ public class ModelPARSE {
      * @param password
      * @param registerCallback
      */
+    @Override
     public void register (User user, String password, final AfterRegisterCallback registerCallback){
-        ParseUser parseUser = new ParseUser();
+        final ParseUser parseUser = new ParseUser();
 
         parseUser.setUsername(user.getEmail());
         parseUser.setPassword(password);
@@ -792,7 +979,7 @@ public class ModelPARSE {
         parseUser.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    registerCallback.registerSuccessful();
+                    registerCallback.registerSuccessful(normalizeParseUser(parseUser));
                 } else {
                     registerCallback.registerFailed(e);
                 }
@@ -803,10 +990,32 @@ public class ModelPARSE {
     /***
      * Logout from parse
      */
+    @Override
     public void logout(){
         //ParseUser.getCurrentUser().logOutInBackground();
         ParseUser.logOutInBackground();
     }
 
     //endregion
+
+
+    //region SYNC -- FOR SQL
+
+    @Override
+    public void addUnsynced(Unsynced unsynced){
+
+    }
+
+    @Override
+    public void removeUnsynced(String unsyncedId){
+
+    }
+
+    @Override
+    public List<Unsynced> getUnsynced(){
+        return null;
+    }
+
+    //endregion
+
 }

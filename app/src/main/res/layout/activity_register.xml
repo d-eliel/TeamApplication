@@ -12,7 +12,8 @@
     android:layout_centerHorizontal="true"
     android:layout_alignParentTop="true"
     android:id="@+id/linearLayout"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@mipmap/android2">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,7 +22,8 @@
         android:text="Register"
         android:id="@+id/register_title_tv"
         android:layout_gravity="center|top"
-        android:textSize="70dp" />
+        android:textSize="70dp"
+        android:textColor="#ffff0041" />
 
     <EditText
         android:layout_width="228dp"
@@ -33,7 +35,8 @@
         android:focusableInTouchMode="true"
         android:focusable="true"
         android:enabled="true"
-        android:editable="true" />
+        android:editable="true"
+        android:textColor="#ffff0041" />
 
     <EditText
         android:layout_width="match_parent"
@@ -41,7 +44,8 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/register_password_et"
-        android:hint="password ****" />
+        android:hint="password ****"
+        android:textColor="#ffff0041" />
 
     <EditText
         android:layout_width="match_parent"
@@ -49,7 +53,8 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/register_password_confirm_et"
-        android:hint="re-type password ****" />
+        android:hint="re-type password ****"
+        android:textColor="#ffff0041" />
 
     <EditText
         android:layout_width="155dp"
@@ -57,7 +62,8 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/register_name_et"
-        android:hint="Your Name" />
+        android:hint="Your Name"
+        android:textColor="#ffff0041" />
 
     <EditText
         android:layout_width="match_parent"
@@ -65,7 +71,8 @@
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/register_phone_et"
-        android:hint="Phone Number" />
+        android:hint="Phone Number"
+        android:textColor="#ffff0041" />
 
     <Button
         android:layout_width="wrap_content"
@@ -73,7 +80,11 @@
         android:text="Register"
         android:id="@+id/register_register_btn"
         android:layout_gravity="center_horizontal"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textColor="#ffff0041"
+        android:background="#f3362f2d"
+        android:layout_margin="5dp"
+        android:padding="5dp" />
 
 </LinearLayout>
 

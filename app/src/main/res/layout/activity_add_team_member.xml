@@ -12,7 +12,8 @@ xmlns:tools="http://schemas.android.com/tools"
     android:layout_centerHorizontal="true"
     android:layout_alignParentTop="true"
     android:id="@+id/linearLayout"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@mipmap/android2">
 
 <TextView
     android:layout_width="wrap_content"
@@ -21,7 +22,10 @@ xmlns:tools="http://schemas.android.com/tools"
     android:text="New Team Member"
     android:id="@+id/add_team_member_header"
     android:layout_gravity="center|top"
-    android:textSize="32dp" />
+    android:textSize="32dp"
+    android:textColor="#ffff0041"
+    android:layout_margin="5dp"
+    android:padding="5dp" />
 
     <EditText
     android:layout_width="fill_parent"
@@ -30,7 +34,10 @@ xmlns:tools="http://schemas.android.com/tools"
     android:ems="10"
     android:id="@+id/add_team_member_title"
     android:hint="Member Title"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="#ffff0041"
+        android:layout_margin="5dp"
+        android:padding="5dp" />
 
     <EditText
     android:layout_width="fill_parent"
@@ -43,7 +50,10 @@ xmlns:tools="http://schemas.android.com/tools"
     android:focusable="true"
     android:enabled="true"
     android:editable="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="#ffff0041"
+        android:layout_margin="5dp"
+        android:padding="5dp" />
 
     <Button
     android:layout_width="wrap_content"
@@ -52,7 +62,11 @@ xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_team_member_join_btn"
     android:layout_gravity="center_horizontal"
     android:textSize="20dp"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:textColor="#ffff0041"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="#f3362f2d" />
 
 </LinearLayout>
 

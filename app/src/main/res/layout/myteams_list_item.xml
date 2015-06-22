@@ -8,12 +8,14 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/myteams_row_name_tv" />
+        android:id="@+id/myteams_row_name_tv"
+        android:textColor="#ffff0041" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/myteams_row_manager_tv" />
+        android:id="@+id/myteams_row_manager_tv"
+        android:textColor="#ffff0041" />
 </LinearLayout>

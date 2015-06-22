@@ -115,7 +115,7 @@ public class TeamActivity extends ActionBarActivity {
             case R.id.menu_team_action_exit:
                 Toast.makeText(getApplicationContext(), "Exit", Toast.LENGTH_LONG).show();
                 finish();
-                System.exit(1);
+                System.exit(0);
             default:
                 return false;
         }

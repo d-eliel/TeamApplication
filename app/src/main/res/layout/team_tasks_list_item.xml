@@ -9,5 +9,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/team_tasks_item_name"
-        android:layout_gravity="left" />
+        android:layout_gravity="left"
+        android:textColor="#ffff0041" />
 </LinearLayout>

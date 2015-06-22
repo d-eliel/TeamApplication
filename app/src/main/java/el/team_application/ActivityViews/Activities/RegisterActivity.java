@@ -80,7 +80,7 @@ public class RegisterActivity extends ActionBarActivity {
     private void registerAsync(final User user, String password) {
         Model.getInstance().register(user, password, new AfterRegisterCallback() {
             @Override
-            public void registerSuccessful() {
+            public void registerSuccessful(User user) {
                 Model.getInstance().setLoggedInUser(user);
                 Toast.makeText(getApplicationContext(), "register successful", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -91,6 +91,7 @@ public class RegisterActivity extends ActionBarActivity {
             @Override
             public void registerFailed(Exception e) {
                 Toast.makeText(getApplicationContext(), "register failed: "+e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                // todo - set error message for no internet
             }
 
         });

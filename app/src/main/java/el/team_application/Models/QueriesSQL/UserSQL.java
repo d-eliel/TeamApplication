@@ -55,6 +55,29 @@ public class UserSQL {
         return null;
     }
 
+    public static User getByEmail (SQLiteDatabase db, String mEmail) {
+        String where = USER_TABLE_EMAIL + " = ?";
+        String[] args = {mEmail};
+        Cursor cursor = db.query(USER_TABLE, null, where, args, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(USER_TABLE_ID);
+            int nameIndex = cursor.getColumnIndex(USER_TABLE_NAME);
+            int emailIndex = cursor.getColumnIndex(USER_TABLE_EMAIL);
+            int phoneIndex = cursor.getColumnIndex(USER_TABLE_PHONE);
+
+            String _id = cursor.getString(idIndex);
+            String name = cursor.getString(nameIndex);
+            String email = cursor.getString(emailIndex);
+            String phone = cursor.getString(phoneIndex);
+
+            User user = new User (_id,email,name);
+            user.setPhone(phone);
+            return user;
+        }
+        return null;
+    }
+
     public static void add(SQLiteDatabase db, User user) {
         ContentValues values = new ContentValues();
         values.put(USER_TABLE_ID, user.getId());

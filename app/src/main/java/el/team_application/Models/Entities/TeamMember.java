@@ -42,4 +42,14 @@ public class TeamMember extends Member {
         if(jobTitle == null)
             this.jobTitle = role.toString();
     }
+
+    @Override
+    public boolean equals(Object obj){
+        TeamMember member = (TeamMember) obj;
+        if(this.getId().equals(member.getId())){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

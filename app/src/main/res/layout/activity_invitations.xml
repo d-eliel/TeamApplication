@@ -5,7 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="el.team_application.ActivityViews.Activities.InvitationsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/andoid1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,7 +17,7 @@
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
         android:textSize="30dp"
-        android:textColor="#FF393939"
+        android:textColor="#ffff0041"
         android:layout_alignWithParentIfMissing="false"
         android:layout_alignParentBottom="false"
         android:layout_alignParentRight="false"
@@ -28,7 +29,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="No Invitations"
         android:id="@+id/invitations_empty_message"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ffff0041" />
 
     <ListView
         android:layout_width="wrap_content"

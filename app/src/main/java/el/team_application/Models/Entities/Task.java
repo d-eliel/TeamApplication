@@ -19,7 +19,7 @@ public class Task {
     Status status;
     String description;
     String association;
-    List<Task> listOfSubTasks;
+//    List<Task> listOfSubTasks;
     List<String> membersIdList;
     String teamId;
 
@@ -30,7 +30,7 @@ public class Task {
         this.creator = creator;
         this.name = name;
         this.status = Status.NOTHING; //starts with 0%
-        listOfSubTasks = new LinkedList<>();
+//        listOfSubTasks = new LinkedList<>();
         membersIdList = new LinkedList<>();
     }
 
@@ -89,13 +89,13 @@ public class Task {
         this.startDate = startDate;
     }
 
-    public List<Task> getListOfSubTasks() {
-        return listOfSubTasks;
-    }
-
-    public void setListOfSubTasks(List<Task> listOfSubTasks) {
-        this.listOfSubTasks = listOfSubTasks;
-    }
+//    public List<Task> getListOfSubTasks() {
+//        return listOfSubTasks;
+//    }
+//
+//    public void setListOfSubTasks(List<Task> listOfSubTasks) {
+//        this.listOfSubTasks = listOfSubTasks;
+//    }
 
     public List<String> getMemberList() {
         return membersIdList;
@@ -137,12 +137,22 @@ public class Task {
         this.teamId = teamId;
     }
 
-    public List<String> getMembersIdList() {
-        return membersIdList;
-    }
+//    public List<String> getMembersIdList() {
+//        return membersIdList;
+//    }
+//
+//    public void setMembersIdList(List<String> membersIdList) {
+//        this.membersIdList = membersIdList;
+//    }
 
-    public void setMembersIdList(List<String> membersIdList) {
-        this.membersIdList = membersIdList;
+    @Override
+    public boolean equals(Object obj){
+        Task task = (Task) obj;
+        if(this.getId().equals(task.getId())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

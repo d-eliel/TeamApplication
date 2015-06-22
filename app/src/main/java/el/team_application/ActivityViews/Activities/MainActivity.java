@@ -12,7 +12,10 @@ import android.widget.Toast;
 
 import com.parse.Parse;
 
+import el.team_application.Listeners.ModelInitListener;
 import el.team_application.Listeners.User.GetSessionCallback;
+import el.team_application.Listeners.User.GetSessionUserCallback;
+import el.team_application.Models.Entities.Session;
 import el.team_application.Models.Entities.User;
 import el.team_application.Models.Model;
 import el.team_application.R;
@@ -26,25 +29,30 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         // Parse Keys
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+        try{
+            // if parse already enabled and initialized
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        final TextView userNameTV = (TextView) findViewById(R.id.main_username_tv);
-        final Button go2InvitationsBtn = (Button) findViewById(R.id.main_invitation_btn);
-        final Button go2MyTeamsBtn = (Button) findViewById(R.id.main_teams_btn);
+        final TextView userNameTV       = (TextView) findViewById(R.id.main_username_tv);
+        final Button go2InvitationsBtn  = (Button) findViewById(R.id.main_invitation_btn);
+        final Button go2MyTeamsBtn      = (Button) findViewById(R.id.main_teams_btn);
 
-        // getting the logged user on the device
-        Model.getInstance().getSession(new GetSessionCallback() {
+        // init model
+        Model.getInstance().init(this, new ModelInitListener() {
             @Override
-            public void loggedInUser(User user) {
-                if (user == null) {
+            public void onResult(User user) {
+                if(user == null){
                     Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
-                    userNameTV.setText(user.getName());
+                    return;
+                }else{
                     loggedInUser = user;
-                    Model.getInstance().setLoggedInUser(user);
+                    userNameTV.setText(loggedInUser.getName());
                 }
             }
         });
@@ -85,16 +93,15 @@ public class MainActivity extends ActionBarActivity {
             case R.id.menu_my_teams_action_logoff:
                 Toast.makeText(getApplicationContext(), "Logoff", Toast.LENGTH_LONG).show();
                 Model.getInstance().logout();
+                finish();
                 intent = new Intent(getApplicationContext(),WelcomeActivity.class);
                 startActivity(intent);
-                finish();
                 return true;
             case R.id.menu_my_teams_action_exit:
                 Toast.makeText(getApplicationContext(), "Exit", Toast.LENGTH_LONG).show();
                 finish();
-                System.exit(1);
+                System.exit(0);
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

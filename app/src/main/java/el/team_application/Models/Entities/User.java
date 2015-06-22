@@ -59,4 +59,14 @@ public class User {
     public void setMyTeams(List<String> myTeams) {
         this.myTeams = myTeams;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        User user = (User) obj;
+        if(this.getId().equals(user.getId())){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

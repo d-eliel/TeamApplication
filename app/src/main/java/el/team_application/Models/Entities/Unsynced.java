@@ -4,12 +4,26 @@ package el.team_application.Models.Entities;
  * Created by Eliel on 6/20/2015.
  */
 public class Unsynced {
+    public enum Action {
+        CREATE,
+        EDIT,
+        REMOVE
+    };
+
+    public enum Table {
+        USER,
+        TEAM,
+        MEMBER,
+        TASK
+
+    };
+
     String id;
-    String action; // might change to enum
-    String table; // might change to enum
+    Action action;
+    Table table;
     String changedObjectId;
 
-    public Unsynced(String id, String action, String table, String changedObjectId) {
+    public Unsynced(String id, Action action, Table table, String changedObjectId) {
         this.id = id;
         this.action = action;
         this.table = table;
@@ -24,19 +38,19 @@ public class Unsynced {
         this.id = id;
     }
 
-    public String getAction() {
+    public Action getAction() {
         return action;
     }
 
-    public void setAction(String action) {
+    public void setAction(Action action) {
         this.action = action;
     }
 
-    public String getTable() {
+    public Table getTable() {
         return table;
     }
 
-    public void setTable(String table) {
+    public void setTable(Table table) {
         this.table = table;
     }
 
@@ -46,5 +60,15 @@ public class Unsynced {
 
     public void setChangedObjectId(String changedObjectId) {
         this.changedObjectId = changedObjectId;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        Unsynced unsync = (Unsynced) obj;
+        if(this.getId().equals(unsync.getId())){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

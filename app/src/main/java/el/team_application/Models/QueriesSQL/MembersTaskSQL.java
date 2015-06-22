@@ -31,6 +31,12 @@ public class MembersTaskSQL {
         db.execSQL("drop table " + MEMBERS_TASK_TABLE + ";");
     }
 
+    /***
+     * return List<String>
+     * @param db
+     * @param taskId
+     * @return
+     */
     public static List<String> getMembersByTaskId(SQLiteDatabase db, String taskId) {
         String where = MEMBERS_TASK_TABLE_TASK_ID + " = ?";
         String[] args = {taskId};

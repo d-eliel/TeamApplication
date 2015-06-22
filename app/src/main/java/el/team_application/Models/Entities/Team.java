@@ -19,7 +19,9 @@ public class Team {
         this.id = id;
         this.name = name;
         this.memberList = new LinkedList<TeamMember>();
-        this.memberList.addAll(members);
+        if(members != null){
+            this.memberList.addAll(members);
+        }
         this.taskList = new LinkedList<Task>();
     }
 
@@ -64,4 +66,13 @@ public class Team {
         this.taskList = taskList;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        Team team = (Team) obj;
+        if(this.getId().equals(team.getId())){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

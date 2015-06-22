@@ -69,4 +69,7 @@ public class TeamSQL {
         db.delete(TEAM_TABLE, where, null);
     }
 
+    public static void deleteAll(SQLiteDatabase db) {
+        db.delete(TEAM_TABLE, null, null);
+    }
 }

@@ -5,7 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="el.team_application.ActivityViews.Activities.MyTeamsActivity">
+    tools:context="el.team_application.ActivityViews.Activities.MyTeamsActivity"
+    android:background="@mipmap/andoid1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +16,7 @@
         android:id="@+id/myteams_title_tv"
         android:textSize="30dp"
         android:layout_gravity="center_horizontal"
-        android:textColor="#ff393939" />
+        android:textColor="#ffff0041" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,11 +24,13 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="No Teams"
         android:id="@+id/myteams_empty_message"
-        android:layout_gravity="center_horizontal|top" />
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ffff0041" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/myteam_list" />
+        android:id="@+id/myteam_list"
+        android:background="@mipmap/andoid1" />
 
 </LinearLayout>

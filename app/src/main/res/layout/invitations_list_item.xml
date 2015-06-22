@@ -16,7 +16,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/invitations_inviter_email_tv"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#ffff0041"
+            android:layout_margin="5dp"
+            android:padding="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -24,7 +27,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/invitations_inviter_team_tv"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#ffff0041"
+            android:layout_margin="5dp"
+            android:padding="8dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +46,10 @@
             android:layout_height="wrap_content"
             android:text="Accept"
             android:id="@+id/invitations_accept_btn"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#ffff0041"
+            android:padding="8dp"
+            android:layout_marginRight="10dp" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -48,7 +57,10 @@
             android:layout_height="wrap_content"
             android:text="Decline"
             android:id="@+id/invitations_decline_btn"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#ffff0041"
+            android:padding="8dp"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 
 </LinearLayout>
