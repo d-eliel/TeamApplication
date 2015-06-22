@@ -3,6 +3,7 @@ package el.team_application.Models.QueriesSQL;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ import el.team_application.Models.Entities.TeamMember;
 
 public class TaskSQL {
 
-    // static string for consistancy
+    // static string for consistency
     final static String TASK_TABLE              = "task";
     final static String TASK_TABLE_ID           = "_taskId";
     final static String TASK_TABLE_TEAM_ID      = "teamId";
@@ -34,7 +35,7 @@ public class TaskSQL {
     // create the table
     static public void create(SQLiteDatabase db) {
         db.execSQL("create table " + TASK_TABLE + " (" +
-                TASK_TABLE_ID + " TEXT PRIMARY KEY," +
+                TASK_TABLE_ID + " TEXT," +
                 TASK_TABLE_NAME + " TEXT," +
                 TASK_TABLE_TEAM_ID + " TEXT," +
                 TASK_TABLE_CREATOR_ID + " TEXT," +

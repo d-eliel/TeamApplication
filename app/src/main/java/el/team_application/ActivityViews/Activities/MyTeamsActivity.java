@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class MyTeamsActivity extends ActionBarActivity {
     User                loggedInUser;
     List<Team>          teams = new LinkedList<Team>();
     static final int    NEW_TEAM_REQUEST = 1;
+    ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MyTeamsActivity extends ActionBarActivity {
         loggedInUser = Model.getInstance().getLoggedInUser();
 
         listView = (ListView) findViewById(R.id.myteam_list);
+        pb = (ProgressBar)findViewById(R.id.loadingSpinner);
         adapter  = new MyTeamsAdapter();
         listView.setAdapter(adapter);
 
@@ -67,6 +70,7 @@ public class MyTeamsActivity extends ActionBarActivity {
             public void onResult(List<Team> myTeams, Exception e) {
                 teams = myTeams;
                 adapter.notifyDataSetChanged();
+                pb.setVisibility(View.GONE);
             }
         });
     }

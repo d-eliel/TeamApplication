@@ -22,7 +22,7 @@ public class SessionSQL {
 
     static public void create(SQLiteDatabase db){
         db.execSQL("create table " + SESSION_TABLE + " (" +
-                SESSION_TABLE_ID + " TEXT PRIMARY KEY," +
+                SESSION_TABLE_ID + " TEXT," +
                 SESSION_TABLE_USER_ID + " TEXT," +
                 SESSION_TABLE_TOKEN + " TEXT," +
                 SESSION_TABLE_IS_LOGGED + " BOOLEAN," +

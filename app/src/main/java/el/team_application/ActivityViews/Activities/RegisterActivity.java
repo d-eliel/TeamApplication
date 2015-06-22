@@ -1,5 +1,6 @@
 package el.team_application.ActivityViews.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import el.team_application.R;
 
 public class RegisterActivity extends ActionBarActivity {
 
+    ProgressDialog registerDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,12 @@ public class RegisterActivity extends ActionBarActivity {
         final EditText nameText       = (EditText) findViewById(R.id.register_name_et);
         final EditText phoneText      = (EditText) findViewById(R.id.register_phone_et);
 
+
+        // dialog initalization
+        registerDialog = new ProgressDialog(this);
+        registerDialog.setIndeterminate(true);
+        registerDialog.setMessage("Logging In...");
+        registerDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         // listeners:
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +77,7 @@ public class RegisterActivity extends ActionBarActivity {
                     nameText.setError("Please Enter Your Name");
                     return;
                 }
-
+                registerDialog.show();
                 registerAsync(newUser, password);
             }
         });
@@ -84,6 +92,7 @@ public class RegisterActivity extends ActionBarActivity {
                 Model.getInstance().setLoggedInUser(user);
                 Toast.makeText(getApplicationContext(), "register successful", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                registerDialog.dismiss();
                 startActivity(intent);
                 finish();
             }

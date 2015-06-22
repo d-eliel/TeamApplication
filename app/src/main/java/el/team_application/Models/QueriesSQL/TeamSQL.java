@@ -23,7 +23,7 @@ public class TeamSQL {
 
     static public void create(SQLiteDatabase db){
         db.execSQL("create table " + TEAM_TABLE + " (" +
-                TEAM_TABLE_ID + " TEXT PRIMARY KEY," +
+                TEAM_TABLE_ID + " TEXT," +
                 TEAM_TABLE_NAME + " TEXT);");
     }
 

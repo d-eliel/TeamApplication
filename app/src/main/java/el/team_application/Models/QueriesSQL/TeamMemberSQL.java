@@ -27,7 +27,7 @@ public class TeamMemberSQL {
 
     static public void create(SQLiteDatabase db) {
         db.execSQL("create table " + TEAM_MEMBER_TABLE + " (" +
-                        TEAM_MEMBER_TABLE_ID + " TEXT PRIMARY KEY," +
+                        TEAM_MEMBER_TABLE_ID + " TEXT," +
                         TEAM_MEMBER_TABLE_USER_ID + " TEXT," +
                         TEAM_MEMBER_TABLE_JOIN_DATE + " TEXT," +
                         TEAM_MEMBER_TABLE_JOB_TITLE + " TEXT," +

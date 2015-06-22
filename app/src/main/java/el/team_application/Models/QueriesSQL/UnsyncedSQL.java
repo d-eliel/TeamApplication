@@ -25,7 +25,7 @@ public class UnsyncedSQL {
 
     static public void create(SQLiteDatabase db){
         db.execSQL("create table " + UNSYNCED_TABLE + " (" +
-                UNSYNCED_TABLE_ID + " TEXT PRIMARY KEY," +
+                UNSYNCED_TABLE_ID + " TEXT," +
                 UNSYNCED_TABLE_ACTION + " TEXT," +
                 UNSYNCED_TABLE_TABLE + "TEXT," +
                 UNSYNCED_TABLE_CHANGED_OBJECT_ID + " TEXT);");

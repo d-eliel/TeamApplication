@@ -22,7 +22,7 @@ public class UserSQL {
 
     static public void create(SQLiteDatabase db){
         db.execSQL("create table " + USER_TABLE + " (" +
-                USER_TABLE_ID + " TEXT PRIMARY KEY," +
+                USER_TABLE_ID + " TEXT," +
                 USER_TABLE_NAME + " TEXT," +
                 USER_TABLE_EMAIL + " TEXT," +
                 USER_TABLE_PHONE + " TEXT);");

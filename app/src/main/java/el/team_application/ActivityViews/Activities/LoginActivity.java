@@ -1,5 +1,6 @@
 package el.team_application.ActivityViews.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import el.team_application.R;
 public class LoginActivity extends ActionBarActivity {
 
     private Model model;
+    private ProgressDialog loginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,12 @@ public class LoginActivity extends ActionBarActivity {
         final EditText emailText      = (EditText) findViewById(R.id.login_email_et);
         final EditText pwdText        = (EditText) findViewById(R.id.login_password_et);
 
+        // dialog initalization
+        loginDialog = new ProgressDialog(this);
+        loginDialog.setIndeterminate(true);
+        loginDialog.setMessage("Logging In...");
+        loginDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
         // click listeners:
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +46,7 @@ public class LoginActivity extends ActionBarActivity {
                 String email = emailText.getText().toString();
                 String password = pwdText.getText().toString();
                 loginAsync(email,password);
+                loginDialog.show();
             }
         });
 
@@ -58,17 +67,20 @@ public class LoginActivity extends ActionBarActivity {
                 Model.getInstance().setLoggedInUser(user);
                 Toast.makeText(getApplicationContext(),"login successful",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                loginDialog.dismiss();
                 startActivity(intent);
                 finish();
             }
 
             @Override
             public void loginFailed(Exception e) {
+                loginDialog.dismiss();
                 Toast.makeText(getApplicationContext(), "login failed", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void usernameOrPasswordIsInvalid(Exception e) {
+                loginDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"login failed - bad credentials",Toast.LENGTH_LONG).show();
             }
         });

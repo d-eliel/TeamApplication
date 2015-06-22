@@ -28,14 +28,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Parse Keys
-        try{
-            // if parse already enabled and initialized
-            Parse.enableLocalDatastore(this);
-            Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        // Parse Keys
+//        try{
+//            // if parse already enabled and initialized
+//            Parse.enableLocalDatastore(this);
+//            Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 
         final TextView userNameTV       = (TextView) findViewById(R.id.main_username_tv);
         final Button go2InvitationsBtn  = (Button) findViewById(R.id.main_invitation_btn);

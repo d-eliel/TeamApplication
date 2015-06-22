@@ -22,15 +22,15 @@ public class WelcomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-        // Parse Keys
-        try{
-            // if parse already enabled and initialized
-            Parse.enableLocalDatastore(this);
-            Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//
+//        // Parse Keys
+//        try{
+//            // if parse already enabled and initialized
+//            Parse.enableLocalDatastore(this);
+//            Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 
         // buttons
         final Button register_button = (Button) findViewById(R.id.welcome_register_btn);

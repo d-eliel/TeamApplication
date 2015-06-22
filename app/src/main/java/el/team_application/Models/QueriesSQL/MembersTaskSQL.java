@@ -23,8 +23,8 @@ public class MembersTaskSQL {
 
     static public void create(SQLiteDatabase db){
         db.execSQL("create table " + MEMBERS_TASK_TABLE + " (" +
-                MEMBERS_TASK_TABLE_MEMBER_ID + " TEXT PRIMARY KEY," +
-                MEMBERS_TASK_TABLE_TASK_ID + " TEXT PRIMARY KEY);");
+                MEMBERS_TASK_TABLE_MEMBER_ID + " TEXT," +
+                MEMBERS_TASK_TABLE_TASK_ID + " TEXT);");
     }
 
     public static void drop(SQLiteDatabase db) {
