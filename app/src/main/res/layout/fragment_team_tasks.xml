@@ -3,8 +3,6 @@
     android:layout_height="match_parent"
     tools:context="el.team_application.ActivityViews.Fragments.TeamMyTasksFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

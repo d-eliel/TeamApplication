@@ -30,7 +30,6 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/myteam_list"
-        android:background="@mipmap/andoid1" />
+        android:id="@+id/myteam_list" />
 
 </LinearLayout>

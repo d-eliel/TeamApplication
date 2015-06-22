@@ -17,7 +17,7 @@ import el.team_application.R;
 
 public class TeamActivity extends ActionBarActivity {
     /** STATIC VALUES **/
-    public static final int TABS_NUMBER             = 4;
+    public static final int TABS_NUMBER             = 3;
     public static final int NEW_TASK_REQUEST        = 10;
     public static final int NEW_TEAM_MEMBER_REQUEST = 20;
 
@@ -26,7 +26,7 @@ public class TeamActivity extends ActionBarActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]= {"Members","Team Tasks", "My Tasks", "Manage"};
+    CharSequence Titles[]= {"Members","Team Tasks", "My Tasks"}; //, "Manage"};
     String currentTeamId;
 
     @Override

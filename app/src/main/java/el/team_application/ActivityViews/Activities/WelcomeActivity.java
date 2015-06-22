@@ -32,7 +32,6 @@ public class WelcomeActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-
         // buttons
         final Button register_button = (Button) findViewById(R.id.welcome_register_btn);
         final Button login_button = (Button) findViewById(R.id.welcome_login_btn);
